@@ -1,0 +1,53 @@
+﻿@model LabaManageSys.WebUI.Models.UserViewModel
+@{
+    ViewBag.Title = "Панель: редактирование пользователя";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @if (Model.Name != null && Model.Name != string.Empty)
+        {
+            <h3> Редактируем пользователя - "@Model.Name"</h3>
+        }
+        else
+        {
+            <h3> Добавляем нового пользователя</h3>
+        }
+    </div>
+    @Html.ValidationSummary(false)
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken();
+        <div class="panel-body">
+            @Html.HiddenFor(_ => _.UserId)
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "UserId":
+                        break;
+                    case "RoleId":
+                        <div class="form-group">
+                            <label>Роль пользователя</label>
+                            @Html.DropDownList("RoleId", null, new { @class = "form-control" })
+                        </div>
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                            @Html.TextBox(property.PropertyName, null,
+                                    new { @class = "form-control" })
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                        break;
+                }
+            }
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            @Html.ActionLink("Отменить изменения и вернуться к списку", "List", null, new
+       {
+           @class = "btn btn-default"
+       })
+        </div>
+    }
+</div>

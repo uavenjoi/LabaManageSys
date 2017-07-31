@@ -1,0 +1,48 @@
+﻿@model LabaManageSys.WebUI.Models.RoleViewModel
+@{
+    ViewBag.Title = "Панель: редактирование роли";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">        
+        @if (Model.Name != null && Model.Name != "")
+        {
+            <h3> Редактируем роль - "@Model.Name"</h3>
+        }
+        else
+        {
+            <h3> Добавляем новую роль</h3>
+        }
+    </div>
+    @Html.ValidationSummary()
+    @using (Html.BeginForm("Edit", "Role",
+                                                  FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken();
+        <div class="panel-body">
+            @Html.HiddenFor(_ => _.RoleId)
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "RoleId":
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                            @Html.TextBox(property.PropertyName, null,
+                                    new { @class = "form-control" })
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                        break;
+                }
+            }
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            @Html.ActionLink("Отменить изменения и вернуться к списку", "List", null, new
+       {
+           @class = "btn btn-default"
+       })
+        </div>
+    }
+</div>
