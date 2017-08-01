@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using System.Web.Mvc;
 using LabaManageSys.WebUI.Abstract;
 using LabaManageSys.WebUI.Controllers;
+using LabaManageSys.WebUI.HtmlHelpers;
 using LabaManageSys.WebUI.Models;
 using LabaManageSys.WebUI.ViewModels.User;
-using System.Web.Mvc;
-using System;
-using LabaManageSys.WebUI.HtmlHelpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace LabaManageSys.Tests
 {
@@ -22,15 +22,15 @@ namespace LabaManageSys.Tests
             Mock<IRepository> mock = new Mock<IRepository>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
-                new UserModel { UserId = 1, Name = "User1"},
-                new UserModel { UserId = 2, Name = "User2"},
-                new UserModel { UserId = 3, Name = "User3"},
-                new UserModel { UserId = 4, Name = "User4"},
-                new UserModel { UserId = 5, Name = "User5"},
-                new UserModel { UserId = 6, Name = "User6"},
-                new UserModel { UserId = 7, Name = "User7"},
-                new UserModel { UserId = 8, Name = "User8"},
-                new UserModel { UserId = 9, Name = "User9"},
+                new UserModel { UserId = 1, Name = "User1" },
+                new UserModel { UserId = 2, Name = "User2" },
+                new UserModel { UserId = 3, Name = "User3" },
+                new UserModel { UserId = 4, Name = "User4" },
+                new UserModel { UserId = 5, Name = "User5" },
+                new UserModel { UserId = 6, Name = "User6" },
+                new UserModel { UserId = 7, Name = "User7" },
+                new UserModel { UserId = 8, Name = "User8" },
+                new UserModel { UserId = 9, Name = "User9" },
             });
            UserController controller = new UserController(mock.Object);
 
@@ -49,10 +49,9 @@ namespace LabaManageSys.Tests
         [TestMethod]
         public void Can_Generate_Page_Links()
         {
-
             // Организация - определение вспомогательного метода HTML - это необходимо
             // для применения расширяющего метода
-            HtmlHelper myHelper = null;
+            HtmlHelper pageHelper = null;
 
             // Организация - создание объекта PagingInfo
             PagingInfo pagingInfo = new PagingInfo
@@ -66,12 +65,13 @@ namespace LabaManageSys.Tests
             Func<int, string> pageUrlDelegate = i => "Page" + i;
 
             // Действие
-            MvcHtmlString result = myHelper.PageLinks(pagingInfo, pageUrlDelegate);
+            MvcHtmlString result = pageHelper.PageLinks(pagingInfo, pageUrlDelegate);
 
             // Утверждение
-            Assert.AreEqual(@"<a class=""btn btn-default"" href=""Page1"">Page 1</a>"
-                + @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">Page 2</a>"
-                + @"<a class=""btn btn-default"" href=""Page3"">Page 3</a>",
+            Assert.AreEqual(
+                   @"<a class=""btn btn-default"" href=""Page1"">Page 1</a>" 
+                 + @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">Page 2</a>"
+                 + @"<a class=""btn btn-default"" href=""Page3"">Page 3</a>",
                 result.ToString());
         }
 
@@ -82,15 +82,15 @@ namespace LabaManageSys.Tests
             Mock<IRepository> mock = new Mock<IRepository>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
-                new UserModel { UserId = 1, Name = "User1"},
-                new UserModel { UserId = 2, Name = "User2"},
-                new UserModel { UserId = 3, Name = "User3"},
-                new UserModel { UserId = 4, Name = "User4"},
-                new UserModel { UserId = 5, Name = "User5"},
-                new UserModel { UserId = 6, Name = "User6"},
-                new UserModel { UserId = 7, Name = "User7"},
-                new UserModel { UserId = 8, Name = "User8"},
-                new UserModel { UserId = 9, Name = "User9"},
+                new UserModel { UserId = 1, Name = "User1" },
+                new UserModel { UserId = 2, Name = "User2" },
+                new UserModel { UserId = 3, Name = "User3" },
+                new UserModel { UserId = 4, Name = "User4" },
+                new UserModel { UserId = 5, Name = "User5" },
+                new UserModel { UserId = 6, Name = "User6" },
+                new UserModel { UserId = 7, Name = "User7" },
+                new UserModel { UserId = 8, Name = "User8" },
+                new UserModel { UserId = 9, Name = "User9" },
             });
             UserController controller = new UserController(mock.Object);
 
@@ -112,15 +112,15 @@ namespace LabaManageSys.Tests
             Mock<IRepository> mock = new Mock<IRepository>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
-                new UserModel { UserId = 1, Name = "User1"},
-                new UserModel { UserId = 2, Name = "User2"},
-                new UserModel { UserId = 3, Name = "User3"},
-                new UserModel { UserId = 4, Name = "User4"},
-                new UserModel { UserId = 5, Name = "User5"},
-                new UserModel { UserId = 6, Name = "User6"},
-                new UserModel { UserId = 7, Name = "User7"},
-                new UserModel { UserId = 8, Name = "User8"},
-                new UserModel { UserId = 9, Name = "User9"},
+                new UserModel { UserId = 1, Name = "User1" },
+                new UserModel { UserId = 2, Name = "User2" },
+                new UserModel { UserId = 3, Name = "User3" },
+                new UserModel { UserId = 4, Name = "User4" },
+                new UserModel { UserId = 5, Name = "User5" },
+                new UserModel { UserId = 6, Name = "User6" },
+                new UserModel { UserId = 7, Name = "User7" },
+                new UserModel { UserId = 8, Name = "User8" },
+                new UserModel { UserId = 9, Name = "User9" },
             });
             UserController controller = new UserController(mock.Object);
 
@@ -129,7 +129,7 @@ namespace LabaManageSys.Tests
             UserModel userModel2 = (controller.Edit(2).ViewData.Model as EditViewModel).User;
             UserModel userModel3 = (controller.Edit(3).ViewData.Model as EditViewModel).User;
 
-            //Утверждение
+            // Утверждение
             Assert.AreEqual(userModel1.UserId, 1);
             Assert.AreEqual(userModel2.UserId, 2);
             Assert.AreEqual(userModel3.UserId, 3);
@@ -192,15 +192,15 @@ namespace LabaManageSys.Tests
             Mock<IRepository> mock = new Mock<IRepository>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
-                new UserModel { UserId = 1, Name = "User1"},
-                new UserModel { UserId = 2, Name = "User2"},
-                new UserModel { UserId = 3, Name = "User3"},
-                new UserModel { UserId = 4, Name = "User4"},
-                new UserModel { UserId = 5, Name = "User5"},
-                new UserModel { UserId = 6, Name = "User6"},
-                new UserModel { UserId = 7, Name = "User7"},
-                new UserModel { UserId = 8, Name = "User8"},
-                new UserModel { UserId = 9, Name = "User9"},
+                new UserModel { UserId = 1, Name = "User1" },
+                new UserModel { UserId = 2, Name = "User2" },
+                new UserModel { UserId = 3, Name = "User3" },
+                new UserModel { UserId = 4, Name = "User4" },
+                new UserModel { UserId = 5, Name = "User5" },
+                new UserModel { UserId = 6, Name = "User6" },
+                new UserModel { UserId = 7, Name = "User7" },
+                new UserModel { UserId = 8, Name = "User8" },
+                new UserModel { UserId = 9, Name = "User9" },
             });
 
             // Организация - создание контроллера

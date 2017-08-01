@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LabaManageSys.WebUI.Abstract;
-using Moq;
-using LabaManageSys.WebUI.Models;
-using LabaManageSys.WebUI.Controllers;
-using LabaManageSys.WebUI.ViewModels.Role;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
 using System.Web.Mvc;
+using LabaManageSys.WebUI.Abstract;
+using LabaManageSys.WebUI.Controllers;
+using LabaManageSys.WebUI.Models;
+using LabaManageSys.WebUI.ViewModels.Role;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace LabaManageSys.Tests
 {
@@ -20,10 +20,10 @@ namespace LabaManageSys.Tests
             Mock<IRepository> mock = new Mock<IRepository>();
             mock.Setup(m => m.RoleModels).Returns(new List<RoleModel>
             {
-                new RoleModel { RoleId = 1, Name = "Role1"},
-                new RoleModel { RoleId = 2, Name = "Role2"},
-                new RoleModel { RoleId = 3, Name = "Role3"},
-                new RoleModel { RoleId = 4, Name = "Role4"},
+                new RoleModel { RoleId = 1, Name = "Role1" },
+                new RoleModel { RoleId = 2, Name = "Role2" },
+                new RoleModel { RoleId = 3, Name = "Role3" },
+                new RoleModel { RoleId = 4, Name = "Role4" },
             });
 
             // Организация - создание контроллера
@@ -40,6 +40,7 @@ namespace LabaManageSys.Tests
             Assert.AreEqual(roles[2].Name, "Role3");
             Assert.AreEqual(roles[3].Name, "Role4");
         }
+
         [TestMethod]
         public void Can_Edit_Role()
         {
@@ -47,10 +48,10 @@ namespace LabaManageSys.Tests
             Mock<IRepository> mock = new Mock<IRepository>();
             mock.Setup(m => m.RoleModels).Returns(new List<RoleModel>
             {
-                new RoleModel { RoleId = 1, Name = "Role1"},
-                new RoleModel { RoleId = 2, Name = "Role2"},
-                new RoleModel { RoleId = 3, Name = "Role3"},
-                new RoleModel { RoleId = 4, Name = "Role4"},
+                new RoleModel { RoleId = 1, Name = "Role1" },
+                new RoleModel { RoleId = 2, Name = "Role2" },
+                new RoleModel { RoleId = 3, Name = "Role3" },
+                new RoleModel { RoleId = 4, Name = "Role4" },
             });
 
             // Организация - создание контроллера
@@ -61,7 +62,7 @@ namespace LabaManageSys.Tests
             RoleModel role2 = (controller.Edit(2).ViewData.Model as EditViewModel).Role;
             RoleModel role3 = (controller.Edit(3).ViewData.Model as EditViewModel).Role;
 
-            //Утверждение
+            // Утверждение
             Assert.AreEqual(role1.RoleId, 1);
             Assert.AreEqual(role2.RoleId, 2);
             Assert.AreEqual(role3.RoleId, 3);
@@ -124,10 +125,10 @@ namespace LabaManageSys.Tests
             Mock<IRepository> mock = new Mock<IRepository>();
             mock.Setup(m => m.RoleModels).Returns(new List<RoleModel>
             {
-                new RoleModel { RoleId = 1, Name = "Role1"},
-                new RoleModel { RoleId = 2, Name = "Role2"},
-                new RoleModel { RoleId = 3, Name = "Role3"},
-                new RoleModel { RoleId = 4, Name = "Role4"},
+                new RoleModel { RoleId = 1, Name = "Role1" },
+                new RoleModel { RoleId = 2, Name = "Role2" },
+                new RoleModel { RoleId = 3, Name = "Role3" },
+                new RoleModel { RoleId = 4, Name = "Role4" },
             });
 
             // Организация - создание контроллера
