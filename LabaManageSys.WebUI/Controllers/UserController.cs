@@ -10,15 +10,20 @@ namespace LabaManageSys.WebUI.Controllers
     public class UserController : Controller
     {
         private IRepository repository;
+        private int pageSize = 5;
 
         public UserController(IRepository repo)
         {
             this.repository = repo;
         }
 
-        public ViewResult List()
+        public ViewResult List(int page = 1)
         {
-            ListViewModel model = new ListViewModel { Users = this.repository.UserModels };
+            ListViewModel model = new ListViewModel
+            {
+                Users = this.repository.UserModels.OrderBy(_ => _.Name).Skip((page - 1) * this.pageSize).Take(this.pageSize),
+                PagingInfo = new PagingInfo { CurrentPage = page, TotalItems = this.repository.UserModels.Count(), ItemsPerPage = this.pageSize }
+            };
             return this.View(model);
         }
 
