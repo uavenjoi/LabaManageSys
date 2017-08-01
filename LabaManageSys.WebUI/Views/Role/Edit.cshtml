@@ -1,12 +1,12 @@
-﻿@model LabaManageSys.WebUI.Models.RoleViewModel
+﻿@model LabaManageSys.WebUI.ViewModels.Role.EditViewModel
 @{
     ViewBag.Title = "Панель: редактирование роли";
 }
 <div class="panel panel-primary">
-    <div class="panel-heading">        
-        @if (Model.Name != null && Model.Name != "")
+    <div class="panel-heading">  
+        @if (Model.Role.Name != null && Model.Role.Name != "")
         {
-            <h3> Редактируем роль - "@Model.Name"</h3>
+            <h3> Редактируем роль - "@Model.Role.Name"</h3>
         }
         else
         {
@@ -14,28 +14,13 @@
         }
     </div>
     @Html.ValidationSummary()
-    @using (Html.BeginForm("Edit", "Role",
-                                                  FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "Role", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken();
         <div class="panel-body">
-            @Html.HiddenFor(_ => _.RoleId)
-            @foreach (var property in ViewData.ModelMetadata.Properties)
-            {
-                switch (property.PropertyName)
-                {
-                    case "RoleId":
-                        break;
-                    default:
-                        <div class="form-group">
-                            <label>@(property.DisplayName ?? property.PropertyName)</label>
-                            @Html.TextBox(property.PropertyName, null,
-                                    new { @class = "form-control" })
-                            @Html.ValidationMessage(property.PropertyName)
-                        </div>
-                        break;
-                }
-            }
+            @Html.Hidden("RoleId", Model.Role.RoleId)
+            <p>@Html.Label("Введите название роли")</p>
+            <p>@Html.TextBox("Name", Model.Role.Name)</p>
         </div>
         <div class="panel-footer">
             <input type="submit" value="Сохранить" class="btn btn-primary" />

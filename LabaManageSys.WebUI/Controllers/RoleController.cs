@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using LabaManageSys.Domain.Abstract;
-using LabaManageSys.Domain.EntitiesModel;
+using LabaManageSys.WebUI.Abstract;
 using LabaManageSys.WebUI.Models;
+using LabaManageSys.WebUI.ViewModels.Role;
 
 namespace LabaManageSys.WebUI.Controllers
 {
@@ -18,19 +18,19 @@ namespace LabaManageSys.WebUI.Controllers
 
         public ViewResult List()
         {
-            IEnumerable<RoleViewModel> roles = this.repository.Roles.Select(_ => new RoleViewModel {  RoleId = _.RoleId, Name = _.Name});
+            ListViewModel roles = new ListViewModel { Roles = this.repository.RoleModels };
             return this.View(roles);
         }
 
         public ViewResult Edit(int roleId)
         {
-            RoleViewModel viewRole = new RoleViewModel(this.repository.Roles.FirstOrDefault(_ => _.RoleId == roleId));
+            EditViewModel viewRole = new EditViewModel { Role = this.repository.RoleModels.FirstOrDefault(_ => _.RoleId == roleId) };
             return this.View(viewRole);
         }
 
         // Перегруженная версия Edit() для сохранения изменений
         [HttpPost]
-        public ActionResult Edit(Role role)
+        public ActionResult Edit(RoleModel role)
         {
             if (ModelState.IsValid)
             {
@@ -48,16 +48,16 @@ namespace LabaManageSys.WebUI.Controllers
         // Создание роли
         public ViewResult Create()
         {
-            return this.View("Edit", new RoleViewModel());
+            return this.View("Edit", new EditViewModel { Role = new RoleModel() });
         }
 
         // Удаление роли из базы
         [HttpPost]
         public ActionResult Delete(int roleId)
         {
-            if (!this.repository.AppUsers.Any(_ => _.RoleId == roleId))
+            if (!this.repository.UserModels.Any(_ => _.RoleId == roleId))
             {
-                Role deletedRole = this.repository.RoleDelete(roleId);
+                RoleModel deletedRole = this.repository.RoleDelete(roleId);
                 if (deletedRole != null)
                 {
                     this.TempData["message"] = string.Format("Роль \"{0}\" успешно удалена.", deletedRole.Name);
@@ -66,7 +66,7 @@ namespace LabaManageSys.WebUI.Controllers
             else
             {
                 this.TempData["message"] = string.Format("Роль \"{0}\" нельзя удалить пока есть пользователи в этой роли.",
-                    this.repository.Roles.FirstOrDefault(_ => _.RoleId == roleId).Name);
+                    this.repository.RoleModels.FirstOrDefault(_ => _.RoleId == roleId).Name);
             }
 
             return this.RedirectToAction("List");

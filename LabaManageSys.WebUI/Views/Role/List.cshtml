@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LabaManageSys.WebUI.Models.RoleViewModel>
+﻿@model LabaManageSys.WebUI.ViewModels.Role.ListViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
@@ -17,7 +17,7 @@
                 <th>Имя</th>
                 <th class="text-center">Действия</th>
             </tr>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Roles)
             {
                 <tr>
                     <td>@Html.ActionLink(item.Name, "Edit", new { item.RoleId })</td>

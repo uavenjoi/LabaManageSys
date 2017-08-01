@@ -1,12 +1,13 @@
-﻿@model LabaManageSys.WebUI.Models.UserViewModel
+﻿@model LabaManageSys.WebUI.ViewModels.User.EditViewModel
 @{
     ViewBag.Title = "Панель: редактирование пользователя";
 }
 <div class="panel panel-primary">
     <div class="panel-heading">
-        @if (Model.Name != null && Model.Name != string.Empty)
+
+        @if (Model.User.Name != null && Model.User.Name != string.Empty)
         {
-            <h3> Редактируем пользователя - "@Model.Name"</h3>
+            <h3> Редактируем пользователя - "@Model.User.Name"</h3>
         }
         else
         {
@@ -18,36 +19,20 @@
     {
         @Html.AntiForgeryToken();
         <div class="panel-body">
-            @Html.HiddenFor(_ => _.UserId)
-            @foreach (var property in ViewData.ModelMetadata.Properties)
-            {
-                switch (property.PropertyName)
-                {
-                    case "UserId":
-                        break;
-                    case "RoleId":
-                        <div class="form-group">
-                            <label>Роль пользователя</label>
-                            @Html.DropDownList("RoleId", null, new { @class = "form-control" })
-                        </div>
-                        break;
-                    default:
-                        <div class="form-group">
-                            <label>@(property.DisplayName ?? property.PropertyName)</label>
-                            @Html.TextBox(property.PropertyName, null,
-                                    new { @class = "form-control" })
-                            @Html.ValidationMessage(property.PropertyName)
-                        </div>
-                        break;
-                }
-            }
+            <p>@Html.Hidden("UserId", Model.User.UserId)</p>
+            <p>@Html.Label("Введите имя")</p>
+            <p>@Html.TextBox("Name", Model.User.Name)</p>
+            <p>@Html.Label("Введите email")</p>
+            <p>@Html.TextBox("Email", Model.User.Email)</p>
+            <p>@Html.Label("Выберите роль")</p>
+            <p>@Html.DropDownList("RoleId", new SelectList(Model.Roles, "RoleId", "Name", Model.Roles.FirstOrDefault(_ => _.RoleId == Model.User.RoleId).RoleId))</p>
         </div>
         <div class="panel-footer">
             <input type="submit" value="Сохранить" class="btn btn-primary" />
-            @Html.ActionLink("Отменить изменения и вернуться к списку", "List", null, new
-       {
-           @class = "btn btn-default"
-       })
+             @Html.ActionLink("Отменить изменения и вернуться к списку", "List", null, new
+        {
+            @class = "btn btn-default"
+        })
         </div>
     }
 </div>

@@ -3,17 +3,17 @@ using LabaManageSys.Domain.EntitiesModel;
 
 namespace LabaManageSys.WebUI.Models
 {
-    public class UserViewModel
+    public class UserModel
     {
 
-        public UserViewModel(AppUser user)
+        public UserModel(AppUser user)
         {
             UserId = user.UserId;
             Email = user.Email;
             Name = user.Name;
             RoleId = user.RoleId;
         }
-        public UserViewModel()
+        public UserModel()
         {
         }
 

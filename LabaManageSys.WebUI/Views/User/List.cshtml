@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LabaManageSys.WebUI.Models.UserViewModel>
+﻿@model LabaManageSys.WebUI.ViewModels.User.ListViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
@@ -17,7 +17,7 @@
                 <th class="text-right">Еmail</th>
                 <th class="text-center">Действия</th>
             </tr>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Users)
             {
                 <tr>
                     <td>@Html.ActionLink(item.Name, "Edit", new { item.UserId })</td>

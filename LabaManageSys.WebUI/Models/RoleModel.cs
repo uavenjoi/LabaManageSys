@@ -3,13 +3,13 @@ using LabaManageSys.Domain.EntitiesModel;
 
 namespace LabaManageSys.WebUI.Models
 {
-    public class RoleViewModel
+    public class RoleModel
     {
-        public RoleViewModel()
+        public RoleModel()
         {
         }
 
-        public RoleViewModel(Role role)
+        public RoleModel(Role role)
         {
             RoleId = role.RoleId;
             Name = role.Name;

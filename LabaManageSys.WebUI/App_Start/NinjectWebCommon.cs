@@ -39,7 +39,7 @@ namespace LabaManageSys.WebUI.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel(new LabaManageSys.Domain.DataModule());
+            var kernel = new StandardKernel(new LabaManageSys.Domain.DataModule(), new LabaManageSys.WebUI.RepoModule());
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);

@@ -8,7 +8,6 @@ namespace LabaManageSys.Domain
     {
         public override void Load()
         {
-            Bind<IRepository>().To<EFRepository>();
             Bind<IEFDbContext>().To<EFDbContext>();
         }
     }

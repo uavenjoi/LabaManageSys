@@ -54,9 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IEFDbContext.cs" />
-    <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Concrete\EFDBContext.cs" />
-    <Compile Include="Concrete\EFRepository.cs" />
     <Compile Include="EntitiesModel\AppUser.cs" />
     <Compile Include="EntitiesModel\Role.cs" />
     <Compile Include="Infrastructure\DataModule.cs" />
