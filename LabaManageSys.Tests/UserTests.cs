@@ -6,7 +6,9 @@ using LabaManageSys.WebUI.Abstract;
 using LabaManageSys.WebUI.Controllers;
 using LabaManageSys.WebUI.Models;
 using LabaManageSys.WebUI.ViewModels.User;
-
+using System.Web.Mvc;
+using System;
+using LabaManageSys.WebUI.HtmlHelpers;
 
 namespace LabaManageSys.Tests
 {
@@ -16,7 +18,7 @@ namespace LabaManageSys.Tests
         [TestMethod]
         public void Can_Paginate()
         {
-            // Организация (arrange)
+            // Организация - создание имитированного хранилища данных
             Mock<IRepository> mock = new Mock<IRepository>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
@@ -32,16 +34,183 @@ namespace LabaManageSys.Tests
             });
            UserController controller = new UserController(mock.Object);
 
-            // Действие (act)
+            // Действие 
             ListViewModel result = (ListViewModel)controller.List(page: 2).Model;
 
-            // Утверждение (assert)
+            // Утверждение 
             List<UserModel> users = result.Users.ToList();
             Assert.IsTrue(users.Count == 4);
             Assert.AreEqual(users[0].Name, "User6");
             Assert.AreEqual(users[1].Name, "User7");
             Assert.AreEqual(users[2].Name, "User8");
             Assert.AreEqual(users[3].Name, "User9");
+        }
+
+        [TestMethod]
+        public void Can_Generate_Page_Links()
+        {
+
+            // Организация - определение вспомогательного метода HTML - это необходимо
+            // для применения расширяющего метода
+            HtmlHelper myHelper = null;
+
+            // Организация - создание объекта PagingInfo
+            PagingInfo pagingInfo = new PagingInfo
+            {
+                CurrentPage = 2,
+                TotalItems = 28,
+                ItemsPerPage = 10
+            };
+
+            // Организация - настройка делегата с помощью лямбда-выражения
+            Func<int, string> pageUrlDelegate = i => "Page" + i;
+
+            // Действие
+            MvcHtmlString result = myHelper.PageLinks(pagingInfo, pageUrlDelegate);
+
+            // Утверждение
+            Assert.AreEqual(@"<a class=""btn btn-default"" href=""Page1"">Page 1</a>"
+                + @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">Page 2</a>"
+                + @"<a class=""btn btn-default"" href=""Page3"">Page 3</a>",
+                result.ToString());
+        }
+
+        [TestMethod]
+        public void Can_Send_Pagination_View_Model()
+        {
+            // Организация - создание имитированного хранилища данных
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(m => m.UserModels).Returns(new List<UserModel>
+            {
+                new UserModel { UserId = 1, Name = "User1"},
+                new UserModel { UserId = 2, Name = "User2"},
+                new UserModel { UserId = 3, Name = "User3"},
+                new UserModel { UserId = 4, Name = "User4"},
+                new UserModel { UserId = 5, Name = "User5"},
+                new UserModel { UserId = 6, Name = "User6"},
+                new UserModel { UserId = 7, Name = "User7"},
+                new UserModel { UserId = 8, Name = "User8"},
+                new UserModel { UserId = 9, Name = "User9"},
+            });
+            UserController controller = new UserController(mock.Object);
+
+            // Действие
+            ListViewModel result = (ListViewModel)controller.List(page: 2).Model;
+
+            // Утверждение 
+            PagingInfo pageInfo = result.PagingInfo;
+            Assert.AreEqual(pageInfo.CurrentPage, 2);
+            Assert.AreEqual(pageInfo.ItemsPerPage, 5);
+            Assert.AreEqual(pageInfo.TotalItems, 9);
+            Assert.AreEqual(pageInfo.TotalPages, 2);
+        }
+
+        [TestMethod]
+        public void Can_Edit_User()
+        {
+            // Организация - создание имитированного хранилища данных
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(m => m.UserModels).Returns(new List<UserModel>
+            {
+                new UserModel { UserId = 1, Name = "User1"},
+                new UserModel { UserId = 2, Name = "User2"},
+                new UserModel { UserId = 3, Name = "User3"},
+                new UserModel { UserId = 4, Name = "User4"},
+                new UserModel { UserId = 5, Name = "User5"},
+                new UserModel { UserId = 6, Name = "User6"},
+                new UserModel { UserId = 7, Name = "User7"},
+                new UserModel { UserId = 8, Name = "User8"},
+                new UserModel { UserId = 9, Name = "User9"},
+            });
+            UserController controller = new UserController(mock.Object);
+
+            // Дейтвие
+            UserModel userModel1 = (controller.Edit(1).ViewData.Model as EditViewModel).User;
+            UserModel userModel2 = (controller.Edit(2).ViewData.Model as EditViewModel).User;
+            UserModel userModel3 = (controller.Edit(3).ViewData.Model as EditViewModel).User;
+
+            //Утверждение
+            Assert.AreEqual(userModel1.UserId, 1);
+            Assert.AreEqual(userModel2.UserId, 2);
+            Assert.AreEqual(userModel3.UserId, 3);
+        }
+
+        [TestMethod]
+        public void Can_Save_Valid_Changes()
+        {
+            // Организация - создание имитированного хранилища данных
+            Mock<IRepository> mock = new Mock<IRepository>();
+
+            // Организация - создание контроллера
+            UserController controller = new UserController(mock.Object);
+
+            // Организация - создание объекта UserModel
+            UserModel user = new UserModel { Name = "Test" };
+
+            // Действие - попытка сохранения пользователя
+            ActionResult result = controller.Edit(user);
+
+            // Утверждение - проверка того, что к хранилищу производится обращение
+            mock.Verify(m => m.UserUpdate(user));
+
+            // Утверждение - проверка типа результата метода
+            Assert.IsNotInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Cannot_Save_Invalid_Changes()
+        {
+            // Организация - создание имитированного хранилища данных
+            Mock<IRepository> mock = new Mock<IRepository>();
+
+            // Организация - создание контроллера
+            UserController controller = new UserController(mock.Object);
+
+            // Организация - создание объекта UserModel
+            UserModel user = new UserModel { Name = "Test" };
+
+            // Организация - добавление ошибки в состояние модели
+            controller.ModelState.AddModelError("error", "error");
+
+            // Действие - попытка сохранения пользователя
+            ActionResult result = controller.Edit(user);
+
+            // Утверждение - проверка того, что обращение к хранилищу НЕ производится 
+            mock.Verify(m => m.UserUpdate(It.IsAny<UserModel>()), Times.Never());
+
+            // Утверждение - проверка типа результата метода
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Can_Delete_Valid_Users()
+        {
+            // Организация - создание объекта UserModel
+            UserModel user = new UserModel { UserId = 2, Name = "User2" };
+
+            // Организация - создание имитированного хранилища данных
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(m => m.UserModels).Returns(new List<UserModel>
+            {
+                new UserModel { UserId = 1, Name = "User1"},
+                new UserModel { UserId = 2, Name = "User2"},
+                new UserModel { UserId = 3, Name = "User3"},
+                new UserModel { UserId = 4, Name = "User4"},
+                new UserModel { UserId = 5, Name = "User5"},
+                new UserModel { UserId = 6, Name = "User6"},
+                new UserModel { UserId = 7, Name = "User7"},
+                new UserModel { UserId = 8, Name = "User8"},
+                new UserModel { UserId = 9, Name = "User9"},
+            });
+
+            // Организация - создание контроллера
+            UserController controller = new UserController(mock.Object);
+
+            controller.Delete(user.UserId);
+
+            // Утверждение - проверка того, что метод удаления в хранилище
+            // вызывается для корректного объекта UserModel
+            mock.Verify(m => m.UserDelete(user.UserId));
         }
     }
 }
