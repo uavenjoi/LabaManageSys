@@ -1,6 +1,6 @@
-﻿using Ninject.Modules;
-using LabaManageSys.Domain.Abstract;
+﻿using LabaManageSys.Domain.Abstract;
 using LabaManageSys.Domain.Concrete;
+using Ninject.Modules;
 
 namespace LabaManageSys.Domain
 {

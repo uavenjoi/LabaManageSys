@@ -1,6 +1,6 @@
-﻿using Ninject.Modules;
-using LabaManageSys.WebUI.Abstract;
+﻿using LabaManageSys.WebUI.Abstract;
 using LabaManageSys.WebUI.Concrete;
+using Ninject.Modules;
 
 namespace LabaManageSys.WebUI
 {
@@ -12,4 +12,3 @@ namespace LabaManageSys.WebUI
         }
     }
 }
-

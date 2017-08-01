@@ -11,8 +11,8 @@ namespace LabaManageSys.WebUI.Models
 
         public RoleModel(Role role)
         {
-            RoleId = role.RoleId;
-            Name = role.Name;
+            this.RoleId = role.RoleId;
+            this.Name = role.Name;
         }
 
         public int RoleId { get; set; }

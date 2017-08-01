@@ -1,8 +1,6 @@
 ﻿using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-
-using LabaManageSys.Domain.EntitiesModel;
 using LabaManageSys.Domain.Abstract;
+using LabaManageSys.Domain.EntitiesModel;
 
 namespace LabaManageSys.Domain.Concrete
 {
@@ -15,13 +13,5 @@ namespace LabaManageSys.Domain.Concrete
         public IDbSet<AppUser> AppUsers { get; set; }
 
         public IDbSet<Role> Roles { get; set; }
-
-        
-
-        //public static EFDbContext Create()
-        //{
-        //    return new EFDbContext();
-        //}
-
     }
 }

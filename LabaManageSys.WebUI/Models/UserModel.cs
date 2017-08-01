@@ -5,16 +5,16 @@ namespace LabaManageSys.WebUI.Models
 {
     public class UserModel
     {
+        public UserModel()
+        {
+        }
 
         public UserModel(AppUser user)
         {
-            UserId = user.UserId;
-            Email = user.Email;
-            Name = user.Name;
-            RoleId = user.RoleId;
-        }
-        public UserModel()
-        {
+            this.UserId = user.UserId;
+            this.Email = user.Email;
+            this.Name = user.Name;
+            this.RoleId = user.RoleId;
         }
 
         [Key]
@@ -32,6 +32,5 @@ namespace LabaManageSys.WebUI.Models
         public string Email { get; set; }
 
         public int RoleId { get; set; }
-
     }
 }

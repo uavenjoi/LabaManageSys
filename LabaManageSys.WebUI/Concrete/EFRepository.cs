@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using LabaManageSys.Domain.Abstract;
+using LabaManageSys.Domain.Concrete;
+using LabaManageSys.Domain.EntitiesModel;
 using LabaManageSys.WebUI.Abstract;
 using LabaManageSys.WebUI.Models;
-using LabaManageSys.Domain.Abstract;
-using LabaManageSys.Domain.EntitiesModel;
-using LabaManageSys.Domain.Concrete;
 
 namespace LabaManageSys.WebUI.Concrete
 {
@@ -23,7 +23,6 @@ namespace LabaManageSys.WebUI.Concrete
             {
                 return this.context.AppUsers.Select(_ => new UserModel { UserId = _.UserId, Name = _.Name, Email = _.Email, RoleId = _.RoleId });
             }
-
         }
 
         public IEnumerable<RoleModel> RoleModels
@@ -32,7 +31,6 @@ namespace LabaManageSys.WebUI.Concrete
             {
                 return this.context.Roles.Select(_ => new RoleModel { RoleId = _.RoleId, Name = _.Name });
             }
-
         }
 
         public UserModel UserDelete(int id)
@@ -84,7 +82,7 @@ namespace LabaManageSys.WebUI.Concrete
         {
             if (role.RoleId == 0)
             {
-                this.context.Roles.Add(new Role { Name = role.Name});
+                this.context.Roles.Add(new Role { Name = role.Name });
             }
             else
             {

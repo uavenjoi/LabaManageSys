@@ -18,8 +18,8 @@ namespace LabaManageSys.WebUI.Controllers
 
         public ViewResult List()
         {
-           ListViewModel model = new ListViewModel { Users = this.repository.UserModels };
-           return this.View(model);
+            ListViewModel model = new ListViewModel { Users = this.repository.UserModels };
+            return this.View(model);
         }
 
         public ViewResult Edit(int userId)
@@ -57,11 +57,13 @@ namespace LabaManageSys.WebUI.Controllers
         // Создание пользователя
         public ViewResult Create()
         {
-            return this.View("Edit", new EditViewModel
-            {
-                User = new UserModel { RoleId = this.repository.RoleModels.FirstOrDefault().RoleId},
-                Roles = this.repository.RoleModels
-            });
+            return this.View(
+                "Edit",
+                new EditViewModel
+                {
+                    User = new UserModel { RoleId = this.repository.RoleModels.FirstOrDefault().RoleId },
+                    Roles = this.repository.RoleModels
+                });
         }
 
         // Удаление пользователя из базы
@@ -76,7 +78,5 @@ namespace LabaManageSys.WebUI.Controllers
 
             return this.RedirectToAction("List");
         }
-
     }
-
 }

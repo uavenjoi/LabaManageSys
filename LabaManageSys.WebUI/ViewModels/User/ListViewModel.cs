@@ -6,7 +6,5 @@ namespace LabaManageSys.WebUI.ViewModels.User
     public class ListViewModel
     {
         public IEnumerable<UserModel> Users { get; set; }
-
     }
-
 }

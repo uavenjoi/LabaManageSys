@@ -1,5 +1,5 @@
-﻿using LabaManageSys.Domain.EntitiesModel;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using LabaManageSys.Domain.EntitiesModel;
 
 namespace LabaManageSys.Domain.Abstract
 {

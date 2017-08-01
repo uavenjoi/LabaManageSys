@@ -65,8 +65,7 @@ namespace LabaManageSys.WebUI.Controllers
             }
             else
             {
-                this.TempData["message"] = string.Format("Роль \"{0}\" нельзя удалить пока есть пользователи в этой роли.",
-                    this.repository.RoleModels.FirstOrDefault(_ => _.RoleId == roleId).Name);
+                this.TempData["message"] = string.Format("Роль \"{0}\" нельзя удалить пока есть пользователи в этой роли.", this.repository.RoleModels.FirstOrDefault(_ => _.RoleId == roleId).Name);
             }
 
             return this.RedirectToAction("List");
