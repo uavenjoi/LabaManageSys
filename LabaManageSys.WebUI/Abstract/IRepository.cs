@@ -13,6 +13,10 @@ namespace LabaManageSys.WebUI.Abstract
 
         void UserUpdate(UserModel user);
 
+        bool UserPasswordValidate(UserModel user, string password);
+
+        void UserPasswordSet(UserModel user, string password);
+
         RoleModel RoleDelete(int id);
 
         void RoleUpdate(RoleModel role);

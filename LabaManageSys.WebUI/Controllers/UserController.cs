@@ -7,6 +7,7 @@ using LabaManageSys.WebUI.ViewModels.User;
 
 namespace LabaManageSys.WebUI.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private IRepository repository;

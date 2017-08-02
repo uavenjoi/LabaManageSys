@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LabaManageSys.Domain.Abstract;
 using LabaManageSys.Domain.Concrete;
@@ -39,7 +40,7 @@ namespace LabaManageSys.WebUI.Concrete
             if (entryDb != null)
             {
                 this.context.AppUsers.Remove(entryDb);
-                (this.context as EFDbContext).SaveChanges();
+                this.context.SaveChanges();
             }
 
             return new UserModel(entryDb);
@@ -63,7 +64,24 @@ namespace LabaManageSys.WebUI.Concrete
                 }
             }
 
-            (this.context as EFDbContext).SaveChanges();
+            this.context.SaveChanges();
+        }
+
+        public bool UserPasswordValidate(UserModel user, string password)
+        {
+            AppUser entryDb = this.context.AppUsers.FirstOrDefault(_ => _.UserId == user.UserId && _.Password == password);
+            return entryDb != null;
+        }
+
+        public void UserPasswordSet(UserModel user, string password)
+        {
+            AppUser entryDb = this.context.AppUsers.FirstOrDefault(_ => _.Name == user.Name);
+            if (entryDb != null)
+            {
+                entryDb.Password = password;
+            }
+
+            this.context.SaveChanges();
         }
 
         public RoleModel RoleDelete(int id)
@@ -72,7 +90,7 @@ namespace LabaManageSys.WebUI.Concrete
             if (entryDb != null)
             {
                 this.context.Roles.Remove(entryDb);
-                (this.context as EFDbContext).SaveChanges();
+                this.context.SaveChanges();
             }
 
             return new RoleModel(entryDb);
@@ -93,7 +111,7 @@ namespace LabaManageSys.WebUI.Concrete
                 }
             }
 
-            (this.context as EFDbContext).SaveChanges();
+            this.context.SaveChanges();
         }
     }
 }

@@ -8,5 +8,7 @@ namespace LabaManageSys.Domain.Abstract
          IDbSet<AppUser> AppUsers { get; set; }
 
          IDbSet<Role> Roles { get; set; }
+
+        int SaveChanges();
     }
 }
