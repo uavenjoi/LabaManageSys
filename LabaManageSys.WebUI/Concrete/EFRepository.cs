@@ -84,13 +84,13 @@ namespace LabaManageSys.WebUI.Concrete
             this.context.SaveChanges();
         }
 
-        RoleModel IRepository.GetRoleById(int id)
+        public RoleModel GetRoleById(int id)
         {
             var role = this.context.Roles.FirstOrDefault(_ => _.RoleId == id);
             return (role != null) ? new RoleModel(role) : null;
         }
 
-        RoleModel IRepository.GetRoleByName(string name)
+        public RoleModel GetRoleByName(string name)
         {
             var role = this.context.Roles.FirstOrDefault(_ => _.Name == name);
             return (role != null) ? new RoleModel(role) : null;
@@ -162,6 +162,16 @@ namespace LabaManageSys.WebUI.Concrete
         public int GetUsersCount()
         {
            return this.context.AppUsers.Count();
+        }
+
+        public string[] GetRolesForUser(string username)
+        {
+            return new string[] { this.GetRoleById(this.GetUserByName(username).RoleId).Name };
+        }
+
+        public bool IsUserInRole(string username, string roleName)
+        {
+            return this.GetRoleById(this.GetUserByName(username).RoleId).Name == roleName;
         }
     }
 }

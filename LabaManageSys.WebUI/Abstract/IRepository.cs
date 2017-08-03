@@ -27,6 +27,10 @@ namespace LabaManageSys.WebUI.Abstract
 
         void UserPasswordSet(UserModel user, string password);
 
+        string[] GetRolesForUser(string username);
+
+        bool IsUserInRole(string username, string roleName);
+
         RoleModel GetFirstRole();
 
         RoleModel GetRoleById(int id);

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using System.Web.Mvc;
 using System.Web.Security;
 using LabaManageSys.WebUI.Abstract;
@@ -42,6 +43,11 @@ namespace LabaManageSys.WebUI.Controllers
                     // проверка пароля
                     if (this.repository.UserPasswordValidate(user, model.Password))
                     {
+                        ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                        claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString(), ClaimValueTypes.String));
+                        claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email, ClaimValueTypes.String));
+                        claim.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, this.repository.GetRoleById(user.RoleId).Name, ClaimValueTypes.String));
+
                         FormsAuthentication.SetAuthCookie(model.Name, true);
                         return this.RedirectToAction("Index", "Home");
                     }
