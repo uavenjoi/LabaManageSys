@@ -32,8 +32,7 @@ namespace LabaManageSys.WebUI.Controllers
         {
             EditViewModel model = new EditViewModel
             {
-                User = this.repository.UserModels
-                .FirstOrDefault(_ => _.UserId == userId),
+                User = this.repository.GetUserById(userId),
                 Roles = this.repository.RoleModels
             };
             return this.View(model);
@@ -63,13 +62,13 @@ namespace LabaManageSys.WebUI.Controllers
         // Создание пользователя
         public ViewResult Create()
         {
-            return this.View(
-                "Edit",
-                new EditViewModel
-                {
-                    User = new UserModel { RoleId = this.repository.RoleModels.FirstOrDefault().RoleId },
-                    Roles = this.repository.RoleModels
-                });
+            var model = new EditViewModel
+            {
+                User = new UserModel { RoleId = this.repository.GetFirstRole().RoleId },
+                Roles = this.repository.RoleModels
+            };
+
+            return this.View("Edit", model);
         }
 
         // Удаление пользователя из базы

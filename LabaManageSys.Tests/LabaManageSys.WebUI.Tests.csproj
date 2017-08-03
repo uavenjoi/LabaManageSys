@@ -109,8 +109,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
-    <Compile Include="RoleTests.cs" />
-    <Compile Include="UserTests.cs" />
+    <Compile Include="HtmlHelpers\PagingHelpersTests.cs" />
+    <Compile Include="Controllers\RoleControllerTests.cs" />
+    <Compile Include="Controllers\UserControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

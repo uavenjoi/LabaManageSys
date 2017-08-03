@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabaManageSys.Domain", "Lab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabaManageSys.WebUI", "LabaManageSys.WebUI\LabaManageSys.WebUI.csproj", "{E6704593-1779-4244-A748-744E862A65C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabaManageSys.Tests", "LabaManageSys.Tests\LabaManageSys.Tests.csproj", "{9E4DC2DA-16C7-4804-A509-4A11607935BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabaManageSys.WebUI.Tests", "LabaManageSys.Tests\LabaManageSys.WebUI.Tests.csproj", "{9E4DC2DA-16C7-4804-A509-4A11607935BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -84,6 +84,23 @@ namespace LabaManageSys.WebUI.Concrete
             this.context.SaveChanges();
         }
 
+        RoleModel IRepository.GetRoleById(int id)
+        {
+            var role = this.context.Roles.FirstOrDefault(_ => _.RoleId == id);
+            return (role != null) ? new RoleModel(role) : null;
+        }
+
+        RoleModel IRepository.GetRoleByName(string name)
+        {
+            var role = this.context.Roles.FirstOrDefault(_ => _.Name == name);
+            return (role != null) ? new RoleModel(role) : null;
+        }
+
+        public RoleModel GetFirstRole()
+        {
+            return new RoleModel(this.context.Roles.FirstOrDefault());
+        }
+
         public RoleModel RoleDelete(int id)
         {
             Role entryDb = this.context.Roles.Find(id);
@@ -116,17 +133,35 @@ namespace LabaManageSys.WebUI.Concrete
 
         public IEnumerable<UserModel> UserList(int page, int pageSize)
         {
-            return this.context.AppUsers.Select(_ => new UserModel { UserId = _.UserId, Email = _.Email, Name = _.Name, RoleId = _.RoleId }).OrderBy(_ => _.Name).Skip((page - 1) * pageSize).Take(pageSize);
+            return this.context.AppUsers.Select(_ => new UserModel
+            {
+                UserId = _.UserId,
+                Email = _.Email,
+                Name = _.Name,
+                RoleId = _.RoleId
+            }).OrderBy(_ => _.Name).Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public UserModel GetUserByName(string name)
         {
-            throw new NotImplementedException();
+            var user = this.context.AppUsers.FirstOrDefault(_ => _.Email == name || _.Name == name);
+            return (user != null) ? new UserModel(user) : null;
         }
 
         public UserModel GetUserById(int id)
         {
-            throw new NotImplementedException();
+            var user = this.context.AppUsers.FirstOrDefault(_ => _.UserId == id);
+            return (user != null) ? new UserModel(user) : null;
+        }
+
+        public bool AreUsersInRole(int id)
+        {
+            return this.context.AppUsers.Any(_ => _.RoleId == id);
+        }
+
+        public int GetUsersCount()
+        {
+           return this.context.AppUsers.Count();
         }
     }
 }

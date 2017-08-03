@@ -25,7 +25,7 @@ namespace LabaManageSys.WebUI.Controllers
 
         public ViewResult Edit(int roleId)
         {
-            EditViewModel viewRole = new EditViewModel { Role = this.repository.RoleModels.FirstOrDefault(_ => _.RoleId == roleId) };
+            EditViewModel viewRole = new EditViewModel { Role = this.repository.GetRoleById(roleId) };
             return this.View(viewRole);
         }
 
@@ -56,7 +56,7 @@ namespace LabaManageSys.WebUI.Controllers
         [HttpPost]
         public ActionResult Delete(int roleId)
         {
-            if (!this.repository.UserModels.Any(_ => _.RoleId == roleId))
+            if (!this.repository.AreUsersInRole(roleId))
             {
                 RoleModel deletedRole = this.repository.RoleDelete(roleId);
                 if (deletedRole != null)

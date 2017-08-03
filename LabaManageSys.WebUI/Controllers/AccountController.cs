@@ -10,6 +10,7 @@ namespace LabaManageSys.WebUI.Controllers
     public class AccountController : Controller
     {
         private IRepository repository;
+        private string defaultRole = "Users";
 
         public AccountController(IRepository repo)
         {
@@ -34,7 +35,7 @@ namespace LabaManageSys.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 // поиск пользователя в репозитории
-                var user = this.repository.UserModels.FirstOrDefault(_ => _.Email == model.Name || _.Name == model.Name);
+                var user = this.repository.GetUserByName(model.Name);
 
                 if (user != null)
                 {
@@ -76,11 +77,16 @@ namespace LabaManageSys.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 // поиск пользователя в репозитории
-                var user = this.repository.UserModels.FirstOrDefault(_ => (_.Email == model.Name || _.Name == model.Name) || (_.Email == model.Email || _.Email == model.Name));
-                if (user == null)
+                if (this.repository.GetUserByName(model.Name) == null && this.repository.GetUserByName(model.Email) == null)
                 {
                     // создаем нового пользователя
-                    var newUser = new UserModel { Name = model.Name, Email = model.Email, RoleId = this.repository.RoleModels.FirstOrDefault(_ => _.Name == "Users").RoleId };
+                    var newUser = new UserModel
+                    {
+                        UserId = 0,
+                        Name = model.Name,
+                        Email = model.Email,
+                        RoleId = this.repository.GetRoleByName(this.defaultRole).RoleId
+                    };
                     this.repository.UserUpdate(newUser);
                     this.repository.UserPasswordSet(newUser, model.Password);
 

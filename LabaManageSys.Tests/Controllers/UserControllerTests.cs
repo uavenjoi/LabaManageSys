@@ -13,10 +13,10 @@ using Moq;
 namespace LabaManageSys.Tests
 {
     [TestClass]
-    public class UserTests
+    public class UserControllerTests
     {
         [TestMethod]
-        public void Can_Paginate()
+        public void ListTest()
         {
             // Организация - создание имитированного хранилища данных
             Mock<IRepository> mock = new Mock<IRepository>();
@@ -44,35 +44,6 @@ namespace LabaManageSys.Tests
             Assert.AreEqual(users[1].Name, "User7");
             Assert.AreEqual(users[2].Name, "User8");
             Assert.AreEqual(users[3].Name, "User9");
-        }
-
-        [TestMethod]
-        public void Can_Generate_Page_Links()
-        {
-            // Организация - определение вспомогательного метода HTML - это необходимо
-            // для применения расширяющего метода
-            HtmlHelper pageHelper = null;
-
-            // Организация - создание объекта PagingInfo
-            PagingInfo pagingInfo = new PagingInfo
-            {
-                CurrentPage = 2,
-                TotalItems = 28,
-                ItemsPerPage = 10
-            };
-
-            // Организация - настройка делегата с помощью лямбда-выражения
-            Func<int, string> pageUrlDelegate = i => "Page" + i;
-
-            // Действие
-            MvcHtmlString result = pageHelper.PageLinks(pagingInfo, pageUrlDelegate);
-
-            // Утверждение
-            Assert.AreEqual(
-                   @"<a class=""btn btn-default"" href=""Page1"">Page 1</a>" 
-                 + @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">Page 2</a>"
-                 + @"<a class=""btn btn-default"" href=""Page3"">Page 3</a>",
-                result.ToString());
         }
 
         [TestMethod]

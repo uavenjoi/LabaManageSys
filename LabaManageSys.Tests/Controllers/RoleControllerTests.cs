@@ -11,7 +11,7 @@ using Moq;
 namespace LabaManageSys.Tests
 {
     [TestClass]
-    public class RoleTests
+    public class RoleControllerTests
     {
         [TestMethod]
         public void Can_List_Roles()
