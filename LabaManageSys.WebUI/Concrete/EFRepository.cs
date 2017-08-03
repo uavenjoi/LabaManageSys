@@ -22,7 +22,7 @@ namespace LabaManageSys.WebUI.Concrete
         {
             get
             {
-                return this.context.AppUsers.Select(_ => new UserModel { UserId = _.UserId, Name = _.Name, Email = _.Email, RoleId = _.RoleId });
+                return this.context.AppUsers.Select(_ => new UserModel { UserId = _.UserId, Email = _.Email, Name = _.Name, RoleId = _.RoleId });
             }
         }
 
@@ -112,6 +112,21 @@ namespace LabaManageSys.WebUI.Concrete
             }
 
             this.context.SaveChanges();
+        }
+
+        public IEnumerable<UserModel> UserList(int page, int pageSize)
+        {
+            return this.context.AppUsers.Select(_ => new UserModel { UserId = _.UserId, Email = _.Email, Name = _.Name, RoleId = _.RoleId }).OrderBy(_ => _.Name).Skip((page - 1) * pageSize).Take(pageSize);
+        }
+
+        public UserModel GetUserByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserModel GetUserById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

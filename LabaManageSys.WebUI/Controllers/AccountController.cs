@@ -4,7 +4,6 @@ using System.Web.Security;
 using LabaManageSys.WebUI.Abstract;
 using LabaManageSys.WebUI.Models;
 using LabaManageSys.WebUI.ViewModels.Account;
-using LabaManageSys.WebUI.ViewModels.Home;
 
 namespace LabaManageSys.WebUI.Controllers
 {

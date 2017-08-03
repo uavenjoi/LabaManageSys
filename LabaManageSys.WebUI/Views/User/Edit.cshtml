@@ -15,24 +15,36 @@
         }
     </div>
     @Html.ValidationSummary(false)
-    @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken();
         <div class="panel-body">
-            <p>@Html.Hidden("UserId", Model.User.UserId)</p>
-            <p>@Html.Label("Введите имя")</p>
-            <p>@Html.TextBox("Name", Model.User.Name)</p>
-            <p>@Html.Label("Введите email")</p>
-            <p>@Html.TextBox("Email", Model.User.Email)</p>
-            <p>@Html.Label("Выберите роль")</p>
-            <p>@Html.DropDownList("RoleId", new SelectList(Model.Roles, "RoleId", "Name", Model.Roles.FirstOrDefault(_ => _.RoleId == Model.User.RoleId).RoleId))</p>
+            <div> <p>@Html.HiddenFor(_ => _.User.UserId)  </p> </div>
+
+            <div class="form-group">
+                <p>@Html.LabelFor(_ => _.User.Name)</p>
+                <div>
+                    <p>@Html.EditorFor(_ => _.User.Name)</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <p>@Html.LabelFor(_ => _.User.Email)</p>
+                <div>
+                    <p>@Html.EditorFor(_ => _.User.Email)</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <p>@Html.LabelFor(_ => _.User.RoleId)</p>
+                <div>
+                    <p>@Html.DropDownListFor(_ => _.User.RoleId, new SelectList(Model.Roles, "RoleId", "Name", Model.Roles.FirstOrDefault(_ => _.RoleId == Model.User.RoleId).RoleId))</p>
+                </div>
+            </div>
         </div>
-        <div class="panel-footer">
-            <input type="submit" value="Сохранить" class="btn btn-primary" />
-             @Html.ActionLink("Отменить изменения и вернуться к списку", "List", null, new
+    <div class="panel-footer">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                @Html.ActionLink("Отменить изменения и вернуться к списку", "List", null, new
         {
             @class = "btn btn-default"
         })
-        </div>
+    </div>
     }
 </div>
