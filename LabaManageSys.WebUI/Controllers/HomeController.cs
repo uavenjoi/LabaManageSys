@@ -11,7 +11,7 @@ namespace LabaManageSys.WebUI.Controllers
             IndexViewModel model = new IndexViewModel { Status = "Вы не авторизованы" };
             if (User.Identity.IsAuthenticated)
             {
-               model.Status  = "Ваш логин: " + User.Identity.Name;
+                model.Status = "Ваш логин: " + User.Identity.Name + " роль Админ:" + (User.IsInRole("Administrators") ? "да" : "нет");
             }
 
             return this.View(model);

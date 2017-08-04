@@ -22,7 +22,7 @@ namespace LabaManageSys.WebUI.Controllers
         {
             ListViewModel model = new ListViewModel
             {
-                Users = this.repository.UserList(page, this.pageSize),
+                Users = this.repository.GetUserList(page, this.pageSize),
                 PagingInfo = new PagingInfo { CurrentPage = page, TotalItems = this.repository.UserModels.Count(), ItemsPerPage = this.pageSize }
             };
             return this.View(model);

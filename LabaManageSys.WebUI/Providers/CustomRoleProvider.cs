@@ -7,14 +7,7 @@ namespace LabaManageSys.WebUI.Providers
 {
     public class CustomRoleProvider : RoleProvider
     {
-        private IRepository repository;
-
-        public CustomRoleProvider()
-        {
-            this.repository = DependencyResolver.Current.GetService<IRepository>();
-        }
-
-         public override string ApplicationName
+        public override string ApplicationName
         {
             get
             {
@@ -54,8 +47,8 @@ namespace LabaManageSys.WebUI.Providers
 
         public override string[] GetRolesForUser(string username)
         {
-            this.repository = DependencyResolver.Current.GetService<IRepository>();
-            return this.repository.GetRolesForUser(username);
+            var repository = DependencyResolver.Current.GetService<IRepository>();
+            return repository.GetRolesForUser(username);
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -65,7 +58,8 @@ namespace LabaManageSys.WebUI.Providers
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            return this.repository.IsUserInRole(username, roleName);
+            var repository = DependencyResolver.Current.GetService<IRepository>();
+            return repository.IsUserInRole(username, roleName);
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)

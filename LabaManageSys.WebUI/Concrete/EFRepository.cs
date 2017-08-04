@@ -131,7 +131,7 @@ namespace LabaManageSys.WebUI.Concrete
             this.context.SaveChanges();
         }
 
-        public IEnumerable<UserModel> UserList(int page, int pageSize)
+        public IEnumerable<UserModel> GetUserList(int page, int pageSize)
         {
             return this.context.AppUsers.Select(_ => new UserModel
             {

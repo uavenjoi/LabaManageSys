@@ -9,7 +9,7 @@ namespace LabaManageSys.WebUI.Abstract
 
         IEnumerable<RoleModel> RoleModels { get; }
 
-        IEnumerable<UserModel> UserList(int page, int pageSize);
+        IEnumerable<UserModel> GetUserList(int page, int pageSize);
 
         UserModel GetUserByName(string name);
 

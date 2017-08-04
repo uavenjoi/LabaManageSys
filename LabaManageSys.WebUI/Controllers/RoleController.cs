@@ -7,7 +7,7 @@ using LabaManageSys.WebUI.ViewModels.Role;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    [Authorize(Roles = "Administrators")]
+    [Authorize(Roles = "Administrators, Users")]
     public class RoleController : Controller
     {
         private IRepository repository;
