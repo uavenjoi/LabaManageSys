@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 using System.Web.Security;
 using LabaManageSys.WebUI.Abstract;
 
@@ -13,14 +11,10 @@ namespace LabaManageSys.WebUI.Providers
 
         public CustomRoleProvider()
         {
+            this.repository = DependencyResolver.Current.GetService<IRepository>();
         }
 
-        public CustomRoleProvider(IRepository repo)
-        {
-            this.repository = repo;
-        }
-
-        public override string ApplicationName
+         public override string ApplicationName
         {
             get
             {
@@ -60,6 +54,7 @@ namespace LabaManageSys.WebUI.Providers
 
         public override string[] GetRolesForUser(string username)
         {
+            this.repository = DependencyResolver.Current.GetService<IRepository>();
             return this.repository.GetRolesForUser(username);
         }
 
