@@ -6,7 +6,7 @@ using log4net.Config;
 namespace LabaManageSys.WebUI.Concrete
 {
    public class Logger : ILogger
-   {
+    {
         private ILog log;
 
         public Logger(ILog logger)

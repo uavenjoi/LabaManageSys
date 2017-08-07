@@ -1,9 +1,11 @@
 ﻿using System.Web.Mvc;
 using LabaManageSys.WebUI.Abstract;
+using LabaManageSys.WebUI.Filters;
 using LabaManageSys.WebUI.ViewModels.Home;
 
 namespace LabaManageSys.WebUI.Controllers
 {
+    [FilterException]
     public class HomeController : Controller
     {
         private ILogger log;
@@ -16,6 +18,8 @@ namespace LabaManageSys.WebUI.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            var i = 0;
+            i = 10 / i;           
             IndexViewModel model = new IndexViewModel { Status = "Вы не авторизованы" };
             if (User.Identity.IsAuthenticated)
             {

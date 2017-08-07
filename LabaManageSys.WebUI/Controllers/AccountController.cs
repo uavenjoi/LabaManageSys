@@ -7,6 +7,7 @@ using LabaManageSys.WebUI.ViewModels.Account;
 
 namespace LabaManageSys.WebUI.Controllers
 {
+    [HandleError]
     public class AccountController : Controller
     {
         private IRepository repository;
@@ -49,7 +50,7 @@ namespace LabaManageSys.WebUI.Controllers
                         claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email, ClaimValueTypes.String));
                         claim.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, this.repository.GetRoleById(user.RoleId).Name, ClaimValueTypes.String));
 
-                        FormsAuthentication.SetAuthCookie(model.Name, true);
+                        FormsAuthentication.SetAuthCookie(model.Name, false);
                         this.log.Info("The user " + model.Name + "'s singin succesfully");
                         return this.RedirectToAction("Index", "Home");
                     }
@@ -99,7 +100,7 @@ namespace LabaManageSys.WebUI.Controllers
                     this.repository.UserPasswordSet(newUser, model.Password);
 
                     // если пользователь создан
-                    FormsAuthentication.SetAuthCookie(model.Name, true);
+                    FormsAuthentication.SetAuthCookie(model.Name, false);
                     this.log.Info("The user " + model.Name + "'s singin succesfully");
                     return this.RedirectToAction("Index", "Home");
                 }
