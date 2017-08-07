@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using LabaManageSys.Domain.Abstract;
-using LabaManageSys.Domain.Concrete;
 using LabaManageSys.Domain.EntitiesModel;
 using LabaManageSys.WebUI.Abstract;
+using LabaManageSys.WebUI.Filters;
 using LabaManageSys.WebUI.Models;
 
 namespace LabaManageSys.WebUI.Concrete
 {
+    [FilterException(View = "ErrorPage")]
     public class EFRepository : IRepository
     {
         private IEFDbContext context;

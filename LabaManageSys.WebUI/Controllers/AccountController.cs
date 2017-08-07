@@ -119,7 +119,7 @@ namespace LabaManageSys.WebUI.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                this.log.Info("The user " + User.Identity.Name + " SingOut succesfully");
+                // this.log.Info("The user " + User.Identity.Name + " SingOut succesfully");
                 FormsAuthentication.SignOut();
             }
             else
