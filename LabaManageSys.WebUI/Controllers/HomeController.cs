@@ -1,10 +1,18 @@
 ﻿using System.Web.Mvc;
+using LabaManageSys.WebUI.Abstract;
 using LabaManageSys.WebUI.ViewModels.Home;
 
 namespace LabaManageSys.WebUI.Controllers
 {
     public class HomeController : Controller
     {
+        private ILogger log;
+
+        public HomeController(ILogger logger)
+        {
+            this.log = logger;
+        }
+       
         // GET: Home
         public ActionResult Index()
         {

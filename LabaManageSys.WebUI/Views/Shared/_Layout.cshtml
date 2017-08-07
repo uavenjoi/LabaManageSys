@@ -21,12 +21,22 @@
             </div>
             <div class="navbar-left">
                 @Html.ActionLink("Пользователи", "List", "User", new { area = "" }, new { @class = "btn" })
-                @Html.ActionLink("Роли", "List", "Role", new { area = "" }, new { @class = "btn" })
+                @if (User.IsInRole("Administrators"))
+                {
+                    @Html.ActionLink("Роли", "List", "Role", new { area = "" }, new { @class = "btn" })
+                }
             </div>
             <div class="navbar-right">
-                @Html.ActionLink("Логин", "Login", "Account", new { area = "" }, new { @class = "btn" })
-                @Html.ActionLink("Выход", "Logoff", "Account", new { area = "" }, new { @class = "btn" })
-                @Html.ActionLink("Регистрация", "Register", "Account", new { area = "" }, new { @class = "btn" })
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink(User.Identity.Name,"")
+                    @Html.ActionLink("Выход", "Logoff", "Account", new { area = "" }, new { @class = "btn" })
+                }
+                else
+                {
+                    @Html.ActionLink("Логин", "Login", "Account", new { area = "" }, new { @class = "btn" })
+                    @Html.ActionLink("Регистрация", "Register", "Account", new { area = "" }, new { @class = "btn" })
+                }
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Web.Mvc;
 using System.Web.Security;
 using LabaManageSys.WebUI.Abstract;
@@ -11,11 +10,13 @@ namespace LabaManageSys.WebUI.Controllers
     public class AccountController : Controller
     {
         private IRepository repository;
+        private ILogger log;
         private string defaultRole = "Users";
 
-        public AccountController(IRepository repo)
+        public AccountController(IRepository repo, ILogger logg)
         {
             this.repository = repo;
+            this.log = logg;
         }
 
         public ActionResult Login()
@@ -49,6 +50,7 @@ namespace LabaManageSys.WebUI.Controllers
                         claim.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, this.repository.GetRoleById(user.RoleId).Name, ClaimValueTypes.String));
 
                         FormsAuthentication.SetAuthCookie(model.Name, true);
+                        this.log.Info("The user " + model.Name + "'s singin succesfully");
                         return this.RedirectToAction("Index", "Home");
                     }
                     else
@@ -98,6 +100,7 @@ namespace LabaManageSys.WebUI.Controllers
 
                     // если пользователь создан
                     FormsAuthentication.SetAuthCookie(model.Name, true);
+                    this.log.Info("The user " + model.Name + "'s singin succesfully");
                     return this.RedirectToAction("Index", "Home");
                 }
                 else
@@ -112,7 +115,16 @@ namespace LabaManageSys.WebUI.Controllers
         [Authorize]
         public ActionResult Logoff()
         {
-            FormsAuthentication.SignOut();
+            if (User.Identity.IsAuthenticated)
+            {
+                this.log.Info("The user " + User.Identity.Name + " SingOut succesfully");
+                FormsAuthentication.SignOut();
+            }
+            else
+            {
+                this.TempData["message"] = string.Format("Вам необходимо сначала войти");
+            }
+
             return this.RedirectToAction("Index", "Home");
         }
     }
