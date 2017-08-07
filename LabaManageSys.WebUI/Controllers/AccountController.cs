@@ -2,12 +2,13 @@
 using System.Web.Mvc;
 using System.Web.Security;
 using LabaManageSys.WebUI.Abstract;
+using LabaManageSys.WebUI.Filters;
 using LabaManageSys.WebUI.Models;
 using LabaManageSys.WebUI.ViewModels.Account;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    [HandleError]
+    [FilterException(View = "ErrorPage")]
     public class AccountController : Controller
     {
         private IRepository repository;

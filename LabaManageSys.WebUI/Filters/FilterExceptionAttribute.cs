@@ -8,9 +8,9 @@ using LabaManageSys.WebUI.Abstract;
 
 namespace LabaManageSys.WebUI.Filters
 {
-    public class FilterExceptionAttribute : FilterAttribute, IExceptionFilter
+    public class FilterExceptionAttribute : HandleErrorAttribute
     {
-        public void OnException(ExceptionContext filterContext)
+        public override void OnException(ExceptionContext filterContext)
         {
             if (!filterContext.ExceptionHandled)
             {
@@ -18,13 +18,10 @@ namespace LabaManageSys.WebUI.Filters
 
                 // Формирование сообщения об ошибке
                 StringBuilder logText = new StringBuilder();
-                logText.AppendLine("Возникло исключение: " + exc.HResult.ToString() + "-" + exc.Message);
-                logText.AppendLine("в " + exc.Source + " метод " + exc.TargetSite);
-                
-                // logText.AppendLine("Трассировка Стека:" + exc.StackTrace);
+                logText.Append("Возникло исключение: " + exc.HResult.ToString() + "-" + exc.Message);
+                logText.Append(" в методе " + exc.TargetSite);
                 DependencyResolver.Current.GetService<ILogger>().Debug(logText.ToString());
-                
-                // base.OnException(filterContext);
+                base.OnException(filterContext);
             }
         }
     }

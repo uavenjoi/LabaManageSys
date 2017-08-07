@@ -5,7 +5,7 @@ using LabaManageSys.WebUI.ViewModels.Home;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    [FilterException]
+    [FilterException(View = "ErrorPage")]
     public class HomeController : Controller
     {
         private ILogger log;
@@ -18,8 +18,6 @@ namespace LabaManageSys.WebUI.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var i = 0;
-            i = 10 / i;           
             IndexViewModel model = new IndexViewModel { Status = "Вы не авторизованы" };
             if (User.Identity.IsAuthenticated)
             {
@@ -27,6 +25,13 @@ namespace LabaManageSys.WebUI.Controllers
             }
 
             return this.View(model);
+        }
+
+        public ActionResult TestError()
+        {
+            var i = 0;
+            i = 10 / i;           
+            return this.View();
         }
     }
 }

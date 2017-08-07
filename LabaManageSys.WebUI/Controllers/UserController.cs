@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using LabaManageSys.WebUI.Abstract;
+using LabaManageSys.WebUI.Filters;
 using LabaManageSys.WebUI.Models;
 using LabaManageSys.WebUI.ViewModels.User;
 
 namespace LabaManageSys.WebUI.Controllers
 {
+    [FilterException(View = "ErrorPage")]
     [Authorize]
     public class UserController : Controller
     {

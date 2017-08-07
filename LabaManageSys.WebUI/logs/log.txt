@@ -1,1 +1,3 @@
-
+2017-08-07 17:07:15,565 [16] DEBUG - Возникло исключение: -2147352558-Attempted to divide by zero. в LabaManageSys.WebUI метод System.Web.Mvc.ActionResult TestError()
+2017-08-07 17:16:03,447 [7] DEBUG - Возникло исключение: -2147352558-Attempted to divide by zero. в LabaManageSys.WebUI метод System.Web.Mvc.ActionResult TestError()
+2017-08-07 17:20:57,275 [7] INFO  - The user Alex SingOut succesfully

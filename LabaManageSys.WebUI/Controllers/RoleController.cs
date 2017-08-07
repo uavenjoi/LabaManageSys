@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using LabaManageSys.WebUI.Abstract;
+using LabaManageSys.WebUI.Filters;
 using LabaManageSys.WebUI.Models;
 using LabaManageSys.WebUI.ViewModels.Role;
 
 namespace LabaManageSys.WebUI.Controllers
 {
+    [FilterException(View = "ErrorPage")]
     [Authorize(Roles = "Administrators, Users")]
     public class RoleController : Controller
     {
