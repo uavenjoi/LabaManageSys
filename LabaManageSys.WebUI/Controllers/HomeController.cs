@@ -5,7 +5,6 @@ using LabaManageSys.WebUI.ViewModels.Home;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    [FilterException(View = "ErrorPage")]
     public class HomeController : Controller
     {
         private ILogger log;

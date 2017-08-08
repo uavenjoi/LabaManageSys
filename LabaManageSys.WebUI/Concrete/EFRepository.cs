@@ -8,7 +8,7 @@ using LabaManageSys.WebUI.Models;
 
 namespace LabaManageSys.WebUI.Concrete
 {
-    [FilterException(View = "ErrorPage")]
+    // [FilterException(View = "ErrorPage")]
     public class EFRepository : IRepository
     {
         private IEFDbContext context;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using LabaManageSys.WebUI.App_Start;
 
 namespace LabaManageSys.WebUI
 {
@@ -14,6 +15,7 @@ namespace LabaManageSys.WebUI
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             log4net.Config.XmlConfigurator.Configure();
         }
     }

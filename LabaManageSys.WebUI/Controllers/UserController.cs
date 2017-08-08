@@ -7,7 +7,6 @@ using LabaManageSys.WebUI.ViewModels.User;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    [FilterException(View = "ErrorPage")]
     [Authorize]
     public class UserController : Controller
     {

@@ -3,6 +3,9 @@
   <project key="-1782951157">
     <configuration>DEBUG;TRACE</configuration>
   </project>
+  <project key="1801478474">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
   <sourcecode name="IEFDbContext.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2017/07/29 10:43:06.000</styleCop>

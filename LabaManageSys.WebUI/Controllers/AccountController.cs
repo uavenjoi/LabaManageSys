@@ -8,7 +8,6 @@ using LabaManageSys.WebUI.ViewModels.Account;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    [FilterException(View = "ErrorPage")]
     public class AccountController : Controller
     {
         private IRepository repository;
@@ -52,7 +51,7 @@ namespace LabaManageSys.WebUI.Controllers
                         claim.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, this.repository.GetRoleById(user.RoleId).Name, ClaimValueTypes.String));
 
                         FormsAuthentication.SetAuthCookie(model.Name, false);
-                        this.log.Info("The user " + model.Name + "'s singin succesfully");
+                        this.log.Info("The user " + model.Name + " singin succesfully");
                         return this.RedirectToAction("Index", "Home");
                     }
                     else

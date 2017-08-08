@@ -7,7 +7,6 @@ using LabaManageSys.WebUI.ViewModels.Role;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    [FilterException(View = "ErrorPage")]
     [Authorize(Roles = "Administrators, Users")]
     public class RoleController : Controller
     {
