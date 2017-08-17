@@ -1,6 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using LabaManageSys.WebUI.Abstract;
-using LabaManageSys.WebUI.Filters;
 using LabaManageSys.WebUI.ViewModels.Home;
 
 namespace LabaManageSys.WebUI.Controllers
@@ -24,13 +24,6 @@ namespace LabaManageSys.WebUI.Controllers
             }
 
             return this.View(model);
-        }
-
-        public ActionResult TestError()
-        {
-            var i = 0;
-            i = 10 / i;           
-            return this.View();
         }
     }
 }

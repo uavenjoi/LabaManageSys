@@ -19,7 +19,8 @@ namespace LabaManageSys.Tests
         public void ListTest()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
+            Mock<ILogger> mockLogger = new Mock<ILogger>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
                 new UserModel { UserId = 1, Name = "User1" },
@@ -32,7 +33,7 @@ namespace LabaManageSys.Tests
                 new UserModel { UserId = 8, Name = "User8" },
                 new UserModel { UserId = 9, Name = "User9" },
             });
-           UserController controller = new UserController(mock.Object);
+           UserController controller = new UserController(mock.Object, mockLogger.Object);
 
             // Действие 
             ListViewModel result = (ListViewModel)controller.List(page: 2).Model;
@@ -50,7 +51,8 @@ namespace LabaManageSys.Tests
         public void Can_Send_Pagination_View_Model()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
+            Mock<ILogger> mockLogger = new Mock<ILogger>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
                 new UserModel { UserId = 1, Name = "User1" },
@@ -63,7 +65,7 @@ namespace LabaManageSys.Tests
                 new UserModel { UserId = 8, Name = "User8" },
                 new UserModel { UserId = 9, Name = "User9" },
             });
-            UserController controller = new UserController(mock.Object);
+            UserController controller = new UserController(mock.Object, mockLogger.Object);
 
             // Действие
             ListViewModel result = (ListViewModel)controller.List(page: 2).Model;
@@ -80,7 +82,8 @@ namespace LabaManageSys.Tests
         public void Can_Edit_User()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
+            Mock<ILogger> mockLogger = new Mock<ILogger>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
                 new UserModel { UserId = 1, Name = "User1" },
@@ -93,7 +96,7 @@ namespace LabaManageSys.Tests
                 new UserModel { UserId = 8, Name = "User8" },
                 new UserModel { UserId = 9, Name = "User9" },
             });
-            UserController controller = new UserController(mock.Object);
+            UserController controller = new UserController(mock.Object, mockLogger.Object);
 
             // Дейтвие
             UserModel userModel1 = (controller.Edit(1).ViewData.Model as EditViewModel).User;
@@ -110,10 +113,11 @@ namespace LabaManageSys.Tests
         public void Can_Save_Valid_Changes()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
+            Mock<ILogger> mockLogger = new Mock<ILogger>();
 
             // Организация - создание контроллера
-            UserController controller = new UserController(mock.Object);
+            UserController controller = new UserController(mock.Object, mockLogger.Object);
 
             // Организация - создание объекта UserModel
             UserModel user = new UserModel { Name = "Test" };
@@ -132,10 +136,11 @@ namespace LabaManageSys.Tests
         public void Cannot_Save_Invalid_Changes()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
+            Mock<ILogger> mockLogger = new Mock<ILogger>();
 
             // Организация - создание контроллера
-            UserController controller = new UserController(mock.Object);
+            UserController controller = new UserController(mock.Object, mockLogger.Object);
 
             // Организация - создание объекта UserModel
             UserModel user = new UserModel { Name = "Test" };
@@ -158,9 +163,10 @@ namespace LabaManageSys.Tests
         {
             // Организация - создание объекта UserModel
             UserModel user = new UserModel { UserId = 2, Name = "User2" };
+            Mock<ILogger> mockLogger = new Mock<ILogger>();
 
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
             mock.Setup(m => m.UserModels).Returns(new List<UserModel>
             {
                 new UserModel { UserId = 1, Name = "User1" },
@@ -175,7 +181,7 @@ namespace LabaManageSys.Tests
             });
 
             // Организация - создание контроллера
-            UserController controller = new UserController(mock.Object);
+            UserController controller = new UserController(mock.Object, mockLogger.Object);
 
             controller.Delete(user.UserId);
 

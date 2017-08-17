@@ -17,7 +17,7 @@ namespace LabaManageSys.Tests
         public void Can_List_Roles()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
             mock.Setup(m => m.RoleModels).Returns(new List<RoleModel>
             {
                 new RoleModel { RoleId = 1, Name = "Role1" },
@@ -45,7 +45,7 @@ namespace LabaManageSys.Tests
         public void Can_Edit_Role()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
             mock.Setup(m => m.RoleModels).Returns(new List<RoleModel>
             {
                 new RoleModel { RoleId = 1, Name = "Role1" },
@@ -72,7 +72,7 @@ namespace LabaManageSys.Tests
         public void Can_Save_Valid_Changes()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
 
             // Организация - создание контроллера
             RoleController controller = new RoleController(mock.Object);
@@ -94,7 +94,7 @@ namespace LabaManageSys.Tests
         public void Cannot_Save_Invalid_Changes()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
 
             // Организация - создание контроллера
             RoleController controller = new RoleController(mock.Object);
@@ -122,7 +122,7 @@ namespace LabaManageSys.Tests
             RoleModel role = new RoleModel { RoleId = 2, Name = "Role2" };
 
             // Организация - создание имитированного хранилища данных
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IUsersRepository> mock = new Mock<IUsersRepository>();
             mock.Setup(m => m.RoleModels).Returns(new List<RoleModel>
             {
                 new RoleModel { RoleId = 1, Name = "Role1" },

@@ -8,7 +8,8 @@ namespace LabaManageSys.WebUI
     {
         public override void Load()
         {
-            Bind<IRepository>().To<EFRepository>();
+            Bind<IUsersRepository>().To<EFUsersRepository>();
+            Bind<ILessonsRepository>().To<EFLessonsRepository>();
         }
     }
 }

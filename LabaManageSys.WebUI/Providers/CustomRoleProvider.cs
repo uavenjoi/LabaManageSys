@@ -47,7 +47,7 @@ namespace LabaManageSys.WebUI.Providers
 
         public override string[] GetRolesForUser(string username)
         {
-            var repository = DependencyResolver.Current.GetService<IRepository>();
+            var repository = DependencyResolver.Current.GetService<IUsersRepository>();
             return repository.GetRolesForUser(username);
         }
 
@@ -58,7 +58,7 @@ namespace LabaManageSys.WebUI.Providers
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            var repository = DependencyResolver.Current.GetService<IRepository>();
+            var repository = DependencyResolver.Current.GetService<IUsersRepository>();
             return repository.IsUserInRole(username, roleName);
         }
 

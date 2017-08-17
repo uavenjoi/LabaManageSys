@@ -5,9 +5,13 @@ namespace LabaManageSys.Domain.Abstract
 {
     public interface IEFDbContext
     {
-         IDbSet<AppUser> AppUsers { get; set; }
+        IDbSet<AppUser> AppUsers { get; set; }
 
-         IDbSet<Role> Roles { get; set; }
+        IDbSet<Role> Roles { get; set; }
+
+        IDbSet<Lesson> Lessons { get; set; }
+
+        IDbSet<Course> Courses { get; set; }
 
         int SaveChanges();
     }

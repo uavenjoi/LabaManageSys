@@ -1,9 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LabaManageSys.Domain.EntitiesModel
 {
     public class AppUser
     {
+        public AppUser()
+        {
+            this.Lessons = new HashSet<Lesson>();
+        }
+
         [Key]
         public int UserId { get; set; }
 
@@ -14,15 +20,18 @@ namespace LabaManageSys.Domain.EntitiesModel
 
         [Required(ErrorMessage = "Введите пожалуйста email пользователя")]
         [Display(Name = "Email пользователя")]
-        [EmailAddress]
         [StringLength(50)]
         public string Email { get; set; }
 
-        [Display(Name = "Пароль пользователя")]
+        [Required]
         [StringLength(50)]
-        [DataType(DataType.Password)]
+        [Display(Name = "Пароль пользователя")]
         public string Password { get; set; }
 
         public int RoleId { get; set; }
+
+        public virtual Role Role { get; set; }
+
+        public virtual ICollection<Lesson> Lessons { get; set; }
     }
 }

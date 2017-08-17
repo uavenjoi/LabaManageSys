@@ -3,7 +3,7 @@ using LabaManageSys.WebUI.Models;
 
 namespace LabaManageSys.WebUI.Abstract
 {
-    public interface IRepository
+    public interface IUsersRepository
     {
         IEnumerable<UserModel> UserModels { get; }
 

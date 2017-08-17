@@ -58,8 +58,11 @@
     <Compile Include="Abstract\IEFDbContext.cs" />
     <Compile Include="Concrete\EFDBContext.cs" />
     <Compile Include="EntitiesModel\AppUser.cs" />
+    <Compile Include="EntitiesModel\Lesson.cs" />
+    <Compile Include="EntitiesModel\Course.cs" />
     <Compile Include="EntitiesModel\Role.cs" />
     <Compile Include="Infrastructure\DataModule.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

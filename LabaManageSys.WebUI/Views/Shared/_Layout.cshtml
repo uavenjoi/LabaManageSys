@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/datepicker.min.css" rel="stylesheet" type="text/css">
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
 </head>
 <body>
@@ -27,6 +28,10 @@
                 @if (User.IsInRole("Administrators"))
                 {
                     @Html.ActionLink("Роли", "List", "Role", new { area = "" }, new { @class = "btn" })
+                }
+                @if (User.IsInRole("Teachers"))
+                {
+                    @Html.ActionLink("Учебный план", "List", "TeachPlan", new { area = "" }, new { @class = "btn" })
                 }
             </div>
             <div class="navbar-right">
@@ -57,5 +62,33 @@
     </div>
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/datepicker.min.js"></script>
+    <script type="text/javascript">
+        $('#Dates').datepicker({            
+            // Можно выбрать тольо даты, идущие за сегодняшним днем, включая сегодня
+            inline: true,
+            timepicker: true,
+            startHour: 9,
+            minHours: 9,
+            maxHours: 18,
+            minDate: new Date()
+        })
+         // Сделаем неактивными воскресенье и субботу
+        var disabledDays = [0, 6];
+
+        $('#Dates').datepicker({
+            onRenderCell: function (date, cellType) {
+                if (cellType == 'day') {
+                    var day = date.getDay(),
+                        isDisabled = disabledDays.indexOf(day) != -1;
+
+                    return {
+                        disabled: isDisabled
+                    }
+                }
+            }
+        })
+    </script>
+
 </body>
 </html>

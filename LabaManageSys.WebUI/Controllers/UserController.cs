@@ -10,11 +10,13 @@ namespace LabaManageSys.WebUI.Controllers
     [Authorize]
     public class UserController : Controller
     {
-        private IRepository repository;
+        private IUsersRepository repository;
+        private ILogger log;
         private int pageSize = 5;
 
-        public UserController(IRepository repo)
+        public UserController(IUsersRepository repo, ILogger log)
         {
+            this.log = log;
             this.repository = repo;
         }
 
@@ -28,6 +30,7 @@ namespace LabaManageSys.WebUI.Controllers
             return this.View(model);
         }
 
+        [Authorize(Roles = "Administrators")]
         public ViewResult Edit(int userId)
         {
             EditViewModel model = new EditViewModel
@@ -40,12 +43,15 @@ namespace LabaManageSys.WebUI.Controllers
 
         // Перегруженная версия Edit() для сохранения изменений
         [HttpPost]
+        [Authorize(Roles = "Administrators")]
         public ActionResult Edit(UserModel user)
         {
             if (ModelState.IsValid)
             {
+                var message = "User " + user.Name + ((user.UserId == 0) ? " created" : " edited");
                 this.repository.UserUpdate(user);
                 this.TempData["message"] = string.Format("Изменения в пользователе \"{0}\" были сохранены", user.Name);
+                this.log.Info(message);
                 return this.RedirectToAction("List");
             }
             else
@@ -60,6 +66,7 @@ namespace LabaManageSys.WebUI.Controllers
         }
 
         // Создание пользователя
+        [Authorize(Roles = "Administrators")]
         public ViewResult Create()
         {
             var model = new EditViewModel
@@ -73,6 +80,7 @@ namespace LabaManageSys.WebUI.Controllers
 
         // Удаление пользователя из базы
         [HttpPost]
+        [Authorize(Roles = "Administrators")]
         public ActionResult Delete(int userId)
         {
             UserModel deletedUser = this.repository.UserDelete(userId);

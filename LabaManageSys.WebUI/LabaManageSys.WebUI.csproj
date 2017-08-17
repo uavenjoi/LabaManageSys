@@ -72,6 +72,8 @@
       <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -121,7 +123,28 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datepicker.css" />
+    <Content Include="Content\datepicker.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="dist\css\datepicker.css" />
+    <Content Include="dist\css\datepicker.min.css" />
+    <Content Include="dist\js\datepicker.js" />
+    <Content Include="dist\js\datepicker.min.js" />
+    <Content Include="dist\js\i18n\datepicker.cs.js" />
+    <Content Include="dist\js\i18n\datepicker.da.js" />
+    <Content Include="dist\js\i18n\datepicker.de.js" />
+    <Content Include="dist\js\i18n\datepicker.en.js" />
+    <Content Include="dist\js\i18n\datepicker.es.js" />
+    <Content Include="dist\js\i18n\datepicker.fi.js" />
+    <Content Include="dist\js\i18n\datepicker.fr.js" />
+    <Content Include="dist\js\i18n\datepicker.hu.js" />
+    <Content Include="dist\js\i18n\datepicker.nl.js" />
+    <Content Include="dist\js\i18n\datepicker.pl.js" />
+    <Content Include="dist\js\i18n\datepicker.pt-BR.js" />
+    <Content Include="dist\js\i18n\datepicker.pt.js" />
+    <Content Include="dist\js\i18n\datepicker.ro.js" />
+    <Content Include="dist\js\i18n\datepicker.sk.js" />
+    <Content Include="dist\js\i18n\datepicker.zh.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -135,6 +158,8 @@
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\datepicker.js" />
+    <Content Include="Scripts\datepicker.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -149,16 +174,19 @@
     <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ILessonsRepository.cs" />
     <Compile Include="Abstract\ILogger.cs" />
-    <Compile Include="Abstract\IRepository.cs" />
+    <Compile Include="Abstract\IUsersRepository.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Concrete\EFRepository.cs" />
+    <Compile Include="Concrete\EFLessonsRepository.cs" />
+    <Compile Include="Concrete\EFUsersRepository.cs" />
     <Compile Include="Concrete\Logger.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\TeachPlanController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\FilterExceptionAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -168,6 +196,8 @@
     <Compile Include="Infrastructure\DataModule.cs" />
     <Compile Include="Infrastructure\LoggingModule.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\LessonModel.cs" />
+    <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -178,6 +208,8 @@
     <Compile Include="ViewModels\Home\IndexViewModel.cs" />
     <Compile Include="ViewModels\Role\EditViewModel.cs" />
     <Compile Include="ViewModels\Role\ListViewModel.cs" />
+    <Compile Include="ViewModels\TeachPlan\EditViewModel.cs" />
+    <Compile Include="ViewModels\TeachPlan\ListViewModel.cs" />
     <Compile Include="ViewModels\User\EditViewModel.cs" />
     <Compile Include="ViewModels\User\ListViewModel.cs" />
   </ItemGroup>
@@ -193,6 +225,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\TeachPlan\List.cshtml" />
+    <Content Include="Views\TeachPlan\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

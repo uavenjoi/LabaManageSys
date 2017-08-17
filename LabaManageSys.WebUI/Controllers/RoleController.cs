@@ -7,12 +7,12 @@ using LabaManageSys.WebUI.ViewModels.Role;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    [Authorize(Roles = "Administrators, Users")]
+    [Authorize(Roles = "Administrators")]
     public class RoleController : Controller
     {
-        private IRepository repository;
+        private IUsersRepository repository;
 
-        public RoleController(IRepository repo)
+        public RoleController(IUsersRepository repo)
         {
             this.repository = repo;
         }
@@ -66,7 +66,7 @@ namespace LabaManageSys.WebUI.Controllers
             }
             else
             {
-                this.TempData["message"] = string.Format("Роль \"{0}\" нельзя удалить пока есть пользователи в этой роли.", this.repository.RoleModels.FirstOrDefault(_ => _.RoleId == roleId).Name);
+                this.TempData["message"] = string.Format("Роль \"{0}\" нельзя удалить пока есть пользователи в этой роли.", this.repository.GetRoleById(roleId).Name);
             }
 
             return this.RedirectToAction("List");

@@ -10,11 +10,11 @@ namespace LabaManageSys.WebUI.Controllers
 {
     public class AccountController : Controller
     {
-        private IRepository repository;
+        private IUsersRepository repository;
         private ILogger log;
         private string defaultRole = "Users";
 
-        public AccountController(IRepository repo, ILogger logg)
+        public AccountController(IUsersRepository repo, ILogger logg)
         {
             this.repository = repo;
             this.log = logg;
@@ -45,13 +45,8 @@ namespace LabaManageSys.WebUI.Controllers
                     // проверка пароля
                     if (this.repository.UserPasswordValidate(user, model.Password))
                     {
-                        ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-                        claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString(), ClaimValueTypes.String));
-                        claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email, ClaimValueTypes.String));
-                        claim.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, this.repository.GetRoleById(user.RoleId).Name, ClaimValueTypes.String));
-
                         FormsAuthentication.SetAuthCookie(model.Name, false);
-                        this.log.Info("The user " + model.Name + " singin succesfully");
+                        this.log.Info("User " + model.Name + " logged in");
                         return this.RedirectToAction("Index", "Home");
                     }
                     else
@@ -101,7 +96,8 @@ namespace LabaManageSys.WebUI.Controllers
 
                     // если пользователь создан
                     FormsAuthentication.SetAuthCookie(model.Name, false);
-                    this.log.Info("The user " + model.Name + "'s singin succesfully");
+                    this.log.Info("User " + model.Name + " created");
+                    this.log.Info("User " + model.Name + " logged in");
                     return this.RedirectToAction("Index", "Home");
                 }
                 else

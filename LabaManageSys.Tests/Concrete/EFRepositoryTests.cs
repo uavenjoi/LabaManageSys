@@ -36,12 +36,11 @@ namespace LabaManageSys.Tests.Concrete
             usersMock.As<IQueryable<AppUser>>().Setup(m => m.Provider).Returns(baseUsers.Provider);
             usersMock.As<IQueryable<AppUser>>().Setup(m => m.Expression).Returns(baseUsers.Expression);
             usersMock.As<IQueryable<AppUser>>().Setup(m => m.ElementType).Returns(baseUsers.ElementType);
-            
-            // UsersMock.As<IQueryable<AppUser>>().Setup(m => m.GetEnumerator()).Returns(0 => dbUsers.GetEnumerator());
+            usersMock.As<IQueryable<AppUser>>().Setup(m => m.GetEnumerator()).Returns(baseUsers.GetEnumerator());
             Mock<IEFDbContext> mock = new Mock<IEFDbContext>();
             
             // mock.Setup(m => m.AppUsers).Returns();
-            IRepository repository = new EFRepository(mock.Object);
+            IUsersRepository repository = new EFUsersRepository(mock.Object);
             
             // Действие 
             IEnumerable<UserModel> result = repository.GetUserList(2, 5);
