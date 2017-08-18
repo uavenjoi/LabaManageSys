@@ -32,6 +32,8 @@
                 @if (User.IsInRole("Teachers"))
                 {
                     @Html.ActionLink("Учебный план", "List", "TeachPlan", new { area = "" }, new { @class = "btn" })
+                    @Html.ActionLink("Журнал посещаемости", "List", "Journal", new { area = "" }, new { @class = "btn" })
+
                 }
             </div>
             <div class="navbar-right">
@@ -71,7 +73,8 @@
             startHour: 9,
             minHours: 9,
             maxHours: 18,
-            minDate: new Date()
+            minDate: new Date(),
+            selectedDates: new Date()
         })
          // Сделаем неактивными воскресенье и субботу
         var disabledDays = [0, 6];

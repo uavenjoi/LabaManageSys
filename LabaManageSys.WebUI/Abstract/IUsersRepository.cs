@@ -19,6 +19,8 @@ namespace LabaManageSys.WebUI.Abstract
 
         int GetUsersCount();
 
+        IEnumerable<UserModel> GetUsersInRole(string roleName);
+
         void UserUpdate(UserModel user);
 
         bool AreUsersInRole(int id);

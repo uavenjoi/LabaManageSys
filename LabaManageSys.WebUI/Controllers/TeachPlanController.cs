@@ -14,7 +14,7 @@ namespace LabaManageSys.WebUI.Controllers
     public class TeachPlanController : Controller
     {
         private ILessonsRepository repository;
-
+        
         public TeachPlanController(ILessonsRepository repo)
         {
             this.repository = repo;
@@ -31,25 +31,19 @@ namespace LabaManageSys.WebUI.Controllers
         {
             EditViewModel course = new EditViewModel
             {
-                Course = this.repository.GetCourseById(courseId)
+                Course = this.repository.GetCourseById(courseId),
+                Dates = string.Join(",", this.repository.GetDatesByCourse(courseId).Select(x => x.ToString()).ToArray())
             };
             return this.View(course);
         }
 
         [HttpPost]
-        public ActionResult Edit(EditViewModel courseModel, string dates)
+        public ActionResult Edit(EditViewModel courseModel)
         {
             CultureInfo provider = CultureInfo.InvariantCulture;
             if (ModelState.IsValid)
             {
-                var str_dates = dates.Replace(".", "/").Trim().Split(',');
-                var arr_dates = new DateTime[str_dates.Length];
-                for (int i = 0; i < str_dates.Length; i++)
-                {
-                    arr_dates[i] = DateTime.ParseExact(str_dates[i], "g", new CultureInfo("fr-FR"));
-                }
-
-                this.repository.CourseUpdate(courseModel.Course, arr_dates);
+                this.repository.CourseUpdate(courseModel.Course, courseModel.GetArrayDates());
                 this.TempData["message"] = string.Format("Изменения в курсе \"{0}\" были сохранены", courseModel.Course.Name);
                 return this.RedirectToAction("List");
             }

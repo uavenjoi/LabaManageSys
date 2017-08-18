@@ -26,5 +26,7 @@ namespace LabaManageSys.WebUI.Abstract
         void CourseUpdate(CourseModel course, IEnumerable<DateTime> dates);
 
         void AddLessonsToCourse(int courseId, IEnumerable<DateTime> dates);
+
+        IEnumerable<UserLesson> GetUsersLessonsByCourse(int courseId);
     }
 }

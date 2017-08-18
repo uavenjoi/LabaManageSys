@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LabaManageSys.Domain.Abstract;
 using LabaManageSys.Domain.EntitiesModel;
@@ -21,7 +22,7 @@ namespace LabaManageSys.WebUI.Concrete
         {
             get
             {
-                return this.context.AppUsers.Select(_ => new UserModel { UserId = _.UserId, Email = _.Email, Name = _.Name, RoleId = _.RoleId });
+                return this.context.AppUsers.Select(_ => new UserModel { UserId = _.UserId, Email = _.Email, Name = _.Name, RoleId = _.RoleId }).ToList();
             }
         }
 
@@ -29,7 +30,7 @@ namespace LabaManageSys.WebUI.Concrete
         {
             get
             {
-                return this.context.Roles.Select(_ => new RoleModel { RoleId = _.RoleId, Name = _.Name });
+                return this.context.Roles.Select(_ => new RoleModel { RoleId = _.RoleId, Name = _.Name }).ToList();
             }
         }
 
@@ -138,7 +139,7 @@ namespace LabaManageSys.WebUI.Concrete
                 Email = _.Email,
                 Name = _.Name,
                 RoleId = _.RoleId
-            }).OrderBy(_ => _.Name).Skip((page - 1) * pageSize).Take(pageSize);
+            }).OrderBy(_ => _.Name).Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
         public UserModel GetUserByName(string name)
@@ -171,6 +172,13 @@ namespace LabaManageSys.WebUI.Concrete
         public bool IsUserInRole(string username, string roleName)
         {
             return this.GetRoleById(this.GetUserByName(username).RoleId).Name == roleName;
+        }
+
+        public IEnumerable<UserModel> GetUsersInRole(string roleName)
+        {
+            var role = this.GetRoleByName(roleName);
+            return this.context.AppUsers.Where(_ => _.RoleId == role.RoleId)
+                .Select(_ => new UserModel { UserId = _.UserId, Name = _.Name, Email = _.Email, RoleId = _.RoleId }).ToList();
         }
     }
 }

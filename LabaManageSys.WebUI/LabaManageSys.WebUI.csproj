@@ -185,6 +185,7 @@
     <Compile Include="Concrete\Logger.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TeachPlanController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -206,6 +207,8 @@
     <Compile Include="ViewModels\Account\LoginModel.cs" />
     <Compile Include="ViewModels\Account\RegisterModel.cs" />
     <Compile Include="ViewModels\Home\IndexViewModel.cs" />
+    <Compile Include="ViewModels\Journal\JournalEditModel.cs" />
+    <Compile Include="Models\UserLesson.cs" />
     <Compile Include="ViewModels\Role\EditViewModel.cs" />
     <Compile Include="ViewModels\Role\ListViewModel.cs" />
     <Compile Include="ViewModels\TeachPlan\EditViewModel.cs" />
@@ -227,6 +230,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\TeachPlan\List.cshtml" />
     <Content Include="Views\TeachPlan\Edit.cshtml" />
+    <Content Include="Views\Journal\List.cshtml" />
+    <Content Include="Views\Journal\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

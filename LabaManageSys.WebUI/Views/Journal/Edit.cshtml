@@ -1,0 +1,60 @@
+﻿@using LabaManageSys.WebUI.Models
+@model LabaManageSys.WebUI.ViewModels.Journal.JournalEditModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    ViewBag.Title = "Журнал посещения";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Журнал посещения: @Model.CourseName</h3>
+    </div>
+@using (Html.BeginForm("Edit", "Journal"))
+{
+    @Html.AntiForgeryToken();
+
+    <div class="panel-body">
+        <table class="table table-striped table-condensed table-bordered">
+            <tr>
+                <th> Студент </th>
+                @foreach (var less in Model.Lessons)
+                {
+                    <th>@string.Format("{0:dd.MM.yy}",less.Date.Date)</th>
+                }
+            </tr>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    @foreach (var less in Model.Lessons)
+                    {
+                        <td>
+                            @{
+                                var userLesson = Model.UsersInLesson.FirstOrDefault(_ => _.LessonId == less.LessonId && _.UserId == user.UserId);
+                                if (userLesson != null)
+                                {
+                                    <input type="checkbox" name="UsersInLesson" value="@userLesson" checked/>
+                                }
+                                else
+                                {
+                                    userLesson = new UserLesson { UserId = user.UserId, LessonId = less.LessonId };
+                                    <input type="checkbox" name="UsersInLesson" value="@userLesson"/>
+                                }
+                            }
+                        </td>
+                     }
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="panel-footer">
+        <input type="submit" value="Сохранить" class="btn btn-primary" />
+        @Html.ActionLink("Отменить изменения и вернуться к списку", "List", null, new
+        {
+            @class = "btn btn-default"
+        })
+    </div>
+}
+
+</div>

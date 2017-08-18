@@ -22,7 +22,7 @@ namespace LabaManageSys.WebUI.Concrete
         {
             get
             {
-                return this.context.Courses.Select(_ => new CourseModel { CourseId = _.CourseId, Name = _.Name });
+                return this.context.Courses.Select(_ => new CourseModel { CourseId = _.CourseId, Name = _.Name }).ToList();
             }
         }
 
@@ -30,7 +30,7 @@ namespace LabaManageSys.WebUI.Concrete
         {
             get
             {
-                return this.context.Lessons.Select(_ => new LessonModel { CourseId = _.CourseId, Date = _.Date, LessonId = _.LessonId });
+                return this.context.Lessons.Select(_ => new LessonModel { CourseId = _.CourseId, Date = _.Date, LessonId = _.LessonId }).ToList();
             }
         }
 
@@ -91,7 +91,7 @@ namespace LabaManageSys.WebUI.Concrete
 
         public IEnumerable<LessonModel> GetLessonsByCourse(int courseId)
         {
-            return this.context.Lessons.Where(_ => _.CourseId == courseId).Select(_ => new LessonModel { CourseId = _.CourseId, Date = _.Date, LessonId = _.LessonId });
+            return this.context.Lessons.Where(_ => _.CourseId == courseId).Select(_ => new LessonModel { CourseId = _.CourseId, Date = _.Date, LessonId = _.LessonId }).ToList();
         }
 
         public void AddLessonsToCourse(int courseId, IEnumerable<DateTime> dates)
@@ -102,6 +102,11 @@ namespace LabaManageSys.WebUI.Concrete
             }
 
             this.context.SaveChanges();
+        }
+
+        public IEnumerable<UserLesson> GetUsersLessonsByCourse(int courseId)
+        {
+            return this.context.Lessons.SelectMany(_ => _.AppUsers, (parent, child) => new UserLesson { LessonId = parent.LessonId, UserId = child.UserId }).ToList();
         }
     }
 }

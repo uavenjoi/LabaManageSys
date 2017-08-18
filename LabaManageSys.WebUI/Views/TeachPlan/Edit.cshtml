@@ -1,6 +1,8 @@
 ﻿@model LabaManageSys.WebUI.ViewModels.TeachPlan.EditViewModel
 @{
-    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    ViewBag.Title = "Редактируем курс";
 }
 
 <div class="panel panel-primary">
@@ -8,6 +10,7 @@
         @if (Model.Course.Name != null && Model.Course.Name != "")
         {
             <h3> Редактируем курс - "@Model.Course.Name"</h3>
+            <p> Занятия - @Model.Dates </p>
         }
         else
         {
@@ -27,7 +30,7 @@
             </div>
         </div>
         <div>
-            <input id="Dates" type="text" name="Dates" class="datepicker-here"
+            <input size="600" style="max-width: 600px" id="Dates" type="text" name="Dates" class="datepicker-here"
                    data-multiple-dates="20"
                    data-multiple-dates-separator=","
                    data-timepicker="true"
@@ -43,3 +46,4 @@
     </div>
     }
 </div>
+
