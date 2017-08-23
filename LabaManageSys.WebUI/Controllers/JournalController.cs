@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LabaManageSys.WebUI.Abstract;
+using LabaManageSys.WebUI.Models;
 using LabaManageSys.WebUI.ViewModels.Journal;
 using LabaManageSys.WebUI.ViewModels.TeachPlan;
 
@@ -13,6 +14,7 @@ namespace LabaManageSys.WebUI.Controllers
     {
         private ILessonsRepository lessonRepository;
         private IUsersRepository userRepository;
+        private int pageSize = 10;
 
         public JournalController(ILessonsRepository repoL, IUsersRepository repoU)
         {
@@ -27,16 +29,40 @@ namespace LabaManageSys.WebUI.Controllers
             return this.View(model);
         }
 
-        public ActionResult Edit(int courseId)
+        public ActionResult Edit(int courseId, int page = 1)
         {
             JournalEditModel model = new JournalEditModel
                 {
-                    CourseName = this.lessonRepository.GetCourseById(courseId).Name,
-                    Lessons = this.lessonRepository.GetLessonsByCourse(courseId),
+                    Course = this.lessonRepository.GetCourseById(courseId),
+                    Lessons = this.lessonRepository.GetLessonsByCourse(courseId, page, this.pageSize),
                     Users = this.userRepository.GetUsersInRole("Students"),
-                    UsersInLesson = this.lessonRepository.GetUsersLessonsByCourse(courseId)
-                };
+                    PagingInfo = 
+                    new PagingInfo
+                    {
+                        CurrentPage = page,
+                        TotalItems = this.lessonRepository.LessonsCountByCourse(courseId),
+                        ItemsPerPage = this.pageSize
+                    }
+            };
             return this.View(model);
+        }
+
+        [HttpPost]
+        public void AddUserMissLesson()
+        {
+            var userId = Request.Form.GetValues("userId")[0];
+            var lessonId = Request.Form.GetValues("lessonId")[0];
+            var userLesson = new UserLesson(lessonId, userId);
+            this.lessonRepository.AddUserMissLesson(userLesson);
+        }
+
+        [HttpPost]
+        public void RemoveUserMissLesson()
+        {
+            var userId = Request.Form.GetValues("userId")[0];
+            var lessonId = Request.Form.GetValues("lessonId")[0];
+            var userLesson = new UserLesson(lessonId, userId);
+            this.lessonRepository.RemoveUserMissLesson(userLesson);
         }
 
         [HttpPost]
@@ -44,7 +70,8 @@ namespace LabaManageSys.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.TempData["message"] = string.Format("Изменения в журнале посещений по \"{0}\" были сохранены", journal.CourseName);
+                // this.lessonRepository.UpdateUsersMissLessons(journal.UsersMissLesson, journal.Course.CourseId);
+                this.TempData["message"] = string.Format("Изменения в журнале посещений по \"{0}\" были сохранены", journal.Course.Name);
                 return this.RedirectToAction("List");
             }
             else

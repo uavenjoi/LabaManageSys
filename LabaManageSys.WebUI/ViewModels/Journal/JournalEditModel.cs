@@ -8,12 +8,12 @@ namespace LabaManageSys.WebUI.ViewModels.Journal
 {
     public class JournalEditModel
     {
-        public string CourseName { get; set; }
+        public CourseModel Course { get; set; }
 
         public IEnumerable<UserModel> Users { get; set; }
 
         public IEnumerable<LessonModel> Lessons { get; set; }
 
-        public IEnumerable<UserLesson> UsersInLesson { get; set; }
+        public PagingInfo PagingInfo { get; set; }
     }
 }

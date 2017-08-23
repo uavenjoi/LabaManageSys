@@ -13,9 +13,9 @@ namespace LabaManageSys.WebUI.Abstract
 
         IEnumerable<LessonModel> Lessons { get; }
 
-        IEnumerable<LessonModel> GetLessonsByCourse(int courseId);
+        int LessonsCountByCourse(int courseId);
 
-        bool AreLessonsInCourse(int courseId);
+        IEnumerable<LessonModel> GetLessonsByCourse(int courseId, int page, int pageSize);
 
         CourseModel CourseDelete(int courseId);
 
@@ -25,8 +25,8 @@ namespace LabaManageSys.WebUI.Abstract
 
         void CourseUpdate(CourseModel course, IEnumerable<DateTime> dates);
 
-        void AddLessonsToCourse(int courseId, IEnumerable<DateTime> dates);
+        void AddUserMissLesson(UserLesson userLesson);
 
-        IEnumerable<UserLesson> GetUsersLessonsByCourse(int courseId);
+        void RemoveUserMissLesson(UserLesson userLesson);
     }
 }

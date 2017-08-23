@@ -17,6 +17,7 @@ namespace LabaManageSys.WebUI.Models
             this.LessonId = lesson.LessonId;
             this.CourseId = lesson.CourseId;
             this.Date = lesson.Date;
+            this.Users = lesson.AppUsers.Select(_ => new UserModel(_)).ToList();
         }
 
         public int LessonId { get; set; }
@@ -24,5 +25,7 @@ namespace LabaManageSys.WebUI.Models
         public int CourseId { get; set; }
 
         public DateTime Date { get; set; }
+        
+        public IEnumerable<UserModel> Users { get; set; }
     }
 }

@@ -34,9 +34,15 @@ namespace LabaManageSys.WebUI.Concrete
             }
         }
 
-        public bool AreLessonsInCourse(int courseId)
+        public CourseModel GetCourseById(int courseId)
         {
-            return this.context.Lessons.Any(_ => _.CourseId == courseId);
+            var course = this.context.Courses.FirstOrDefault(_ => _.CourseId == courseId);
+            return (course != null) ? new CourseModel(course) : null;
+        }
+
+        public IEnumerable<DateTime> GetDatesByCourse(int courseId)
+        {
+            return this.context.Lessons.Where(_ => _.CourseId == courseId).Select(_ => _.Date).ToList();
         }
 
         public CourseModel CourseDelete(int courseId)
@@ -51,62 +57,77 @@ namespace LabaManageSys.WebUI.Concrete
             return new CourseModel(entryDb);
         }
 
-        public CourseModel GetCourseById(int courseId)
-        {
-            var course = this.context.Courses.FirstOrDefault(_ => _.CourseId == courseId);
-            return (course != null) ? new CourseModel(course) : null;
-        }
-
-        public IEnumerable<DateTime> GetDatesByCourse(int courseId)
-        {
-            return this.context.Lessons.Where(_ => _.CourseId == courseId).Select(_ => _.Date).ToList();
-        }
-
         public void CourseUpdate(CourseModel course, IEnumerable<DateTime> dates)
         {
-            if (course.CourseId == 0)
+            if (course.CourseId != 0)
             {
-                this.context.Courses.Add(new Course
-                {
-                    Name = course.Name,
-                    Lessons = dates.Select(_ => new Lesson
-                    {
-                        Date = _,
-                        CourseId = course.CourseId,
-                        AppUsers = this.context.AppUsers.Where(m => m.Role.Name == "Students").ToList()
-                    }).ToList()
-                });
+                this.CourseDelete(course.CourseId);
             }
-            else
+
+            this.context.Courses.Add(new Course
             {
-                Course entryDb = this.context.Courses.Find(course.CourseId);
-                if (entryDb != null)
+                Name = course.Name,
+                Lessons = dates.Select(_ => 
+                new Lesson
                 {
-                    entryDb.Name = course.Name;
+                    Date = _,
+                    CourseId = course.CourseId
+                }).ToList()
+            });
+            this.context.SaveChanges();
+        }
+
+        public IEnumerable<LessonModel> GetLessonsByCourse(int courseId, int page, int pageSize)
+        {
+            return this.context.Lessons.Where(_ => _.CourseId == courseId)
+                .Select(_ => 
+                new LessonModel
+                {
+                    CourseId = _.CourseId,
+                    Date = _.Date,
+                    LessonId = _.LessonId,
+                    Users = _.AppUsers.Select(u => 
+                    new UserModel
+                    {
+                        UserId = u.UserId,
+                        Email = u.Email,
+                        Name = u.Name,
+                        RoleId = u.RoleId
+                    }).ToList()
+                }).OrderBy(_ => _.Date).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public void AddUserMissLesson(UserLesson userLesson)
+        {
+            Lesson lessonDbentry = this.context.Lessons.FirstOrDefault(_ => _.LessonId == userLesson.LessonId);
+            if (lessonDbentry != null)
+            {
+                AppUser userDbentry = this.context.AppUsers.FirstOrDefault(_ => _.UserId == userLesson.UserId);
+                if (userDbentry != null && (!lessonDbentry.AppUsers.Any(_ => _.UserId == userLesson.UserId)))
+                {
+                    lessonDbentry.AppUsers.Add(userDbentry);
+                    this.context.SaveChanges();
                 }
             }
-
-            this.context.SaveChanges();
         }
 
-        public IEnumerable<LessonModel> GetLessonsByCourse(int courseId)
+        public void RemoveUserMissLesson(UserLesson userLesson)
         {
-            return this.context.Lessons.Where(_ => _.CourseId == courseId).Select(_ => new LessonModel { CourseId = _.CourseId, Date = _.Date, LessonId = _.LessonId }).ToList();
-        }
-
-        public void AddLessonsToCourse(int courseId, IEnumerable<DateTime> dates)
-        {
-            foreach (var date in dates)
+            Lesson lessonDbentry = this.context.Lessons.FirstOrDefault(_ => _.LessonId == userLesson.LessonId);
+            if (lessonDbentry != null)
             {
-                this.context.Lessons.Add(new Lesson { CourseId = courseId, Date = date, AppUsers = this.context.AppUsers.Where(_ => _.Role.Name == "Students").ToList() });
+                AppUser userDbentry = lessonDbentry.AppUsers.FirstOrDefault(_ => _.UserId == userLesson.UserId);
+                if (userDbentry != null)
+                {
+                    lessonDbentry.AppUsers.Remove(userDbentry);
+                    this.context.SaveChanges();
+                }
             }
-
-            this.context.SaveChanges();
         }
 
-        public IEnumerable<UserLesson> GetUsersLessonsByCourse(int courseId)
+        public int LessonsCountByCourse(int courseId)
         {
-            return this.context.Lessons.SelectMany(_ => _.AppUsers, (parent, child) => new UserLesson { LessonId = parent.LessonId, UserId = child.UserId }).ToList();
+            return this.Lessons.Where(_ => _.CourseId == courseId).Count();
         }
     }
 }

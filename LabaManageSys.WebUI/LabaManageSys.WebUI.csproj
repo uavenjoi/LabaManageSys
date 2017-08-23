@@ -168,7 +168,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Role\Edit.cshtml" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />

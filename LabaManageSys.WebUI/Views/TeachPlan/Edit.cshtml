@@ -1,7 +1,5 @@
 ﻿@model LabaManageSys.WebUI.ViewModels.TeachPlan.EditViewModel
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-
     ViewBag.Title = "Редактируем курс";
 }
 
@@ -30,11 +28,12 @@
             </div>
         </div>
         <div>
-            <input size="600" style="max-width: 600px" id="Dates" type="text" name="Dates" class="datepicker-here"
+                <input size="600" style="max-width: 600px" id="Dates" type="text" name="Dates" class="datepicker-here"
                    data-multiple-dates="20"
                    data-multiple-dates-separator=","
                    data-timepicker="true"
-                   data-position='right top' />
+                   data-position='right top' 
+                   data-dates="@Model.Dates"    />
        </div>
     </div>
     <div class="panel-footer">
@@ -46,4 +45,22 @@
     </div>
     }
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var myDatepicker = $('#Dates').datepicker().data('datepicker');
+            var str = $('#Dates').attr('data-dates');
+            if (str != "" && str != null) {
+                var dates = str.split(',');
+                var date = [];
+                for (var i = 0; i < dates.length; i++) {
+                    date[i] = (new Date(dates[i]));
+                }
+                myDatepicker.selectDate(date);
+            }
+        });
+    </script>
+}
+
 
