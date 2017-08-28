@@ -4,6 +4,7 @@
 namespace LabaManageSys.WebUI.App_Start
 {
     using System;
+    using System.Configuration;
     using System.Web;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -39,7 +40,12 @@ namespace LabaManageSys.WebUI.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel(new LabaManageSys.Domain.DataModule(), new LabaManageSys.WebUI.RepoModule(), new LabaManageSys.WebUI.Infrastructure.LoggingModule());
+                var kernel = new StandardKernel(
+                    new LabaManageSys.Domain.DataModule(),
+                    new LabaManageSys.WebUI.RepositoryModule(),
+                    new LabaManageSys.WebUI.Infrastructure.LoggingModule(),
+                    new LabaManageSys.XML.Infrastructure.XMLProcessorModule(ConfigurationManager.AppSettings["XMLProcessor"]));
+            
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);

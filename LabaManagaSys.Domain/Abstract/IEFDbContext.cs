@@ -13,6 +13,8 @@ namespace LabaManageSys.Domain.Abstract
 
         IDbSet<Course> Courses { get; set; }
 
+        IDbSet<Task> Tasks { get; set; }
+
         int SaveChanges();
     }
 }

@@ -10,6 +10,7 @@ using LabaManageSys.WebUI.ViewModels.TeachPlan;
 
 namespace LabaManageSys.WebUI.Controllers
 {
+    [Authorize(Roles = "Teachers")]
     public class JournalController : Controller
     {
         private ILessonsRepository lessonRepository;

@@ -126,25 +126,6 @@
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\datepicker.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="dist\css\datepicker.css" />
-    <Content Include="dist\css\datepicker.min.css" />
-    <Content Include="dist\js\datepicker.js" />
-    <Content Include="dist\js\datepicker.min.js" />
-    <Content Include="dist\js\i18n\datepicker.cs.js" />
-    <Content Include="dist\js\i18n\datepicker.da.js" />
-    <Content Include="dist\js\i18n\datepicker.de.js" />
-    <Content Include="dist\js\i18n\datepicker.en.js" />
-    <Content Include="dist\js\i18n\datepicker.es.js" />
-    <Content Include="dist\js\i18n\datepicker.fi.js" />
-    <Content Include="dist\js\i18n\datepicker.fr.js" />
-    <Content Include="dist\js\i18n\datepicker.hu.js" />
-    <Content Include="dist\js\i18n\datepicker.nl.js" />
-    <Content Include="dist\js\i18n\datepicker.pl.js" />
-    <Content Include="dist\js\i18n\datepicker.pt-BR.js" />
-    <Content Include="dist\js\i18n\datepicker.pt.js" />
-    <Content Include="dist\js\i18n\datepicker.ro.js" />
-    <Content Include="dist\js\i18n\datepicker.sk.js" />
-    <Content Include="dist\js\i18n\datepicker.zh.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -173,6 +154,7 @@
     <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ITasksRepository.cs" />
     <Compile Include="Abstract\ILessonsRepository.cs" />
     <Compile Include="Abstract\ILogger.cs" />
     <Compile Include="Abstract\IUsersRepository.cs" />
@@ -180,12 +162,15 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Concrete\EFLessonsRepository.cs" />
+    <Compile Include="Concrete\EFTasksRepository.cs" />
     <Compile Include="Concrete\EFUsersRepository.cs" />
     <Compile Include="Concrete\Logger.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\TaskLoadController.cs" />
+    <Compile Include="Controllers\TaskManageController.cs" />
     <Compile Include="Controllers\TeachPlanController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\FilterExceptionAttribute.cs" />
@@ -193,13 +178,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
-    <Compile Include="Infrastructure\DataModule.cs" />
-    <Compile Include="Infrastructure\LoggingModule.cs" />
+    <Compile Include="Infrastructure\Binders\FilterModelBinder.cs" />
+    <Compile Include="Infrastructure\Modules\RepositoryModule.cs" />
+    <Compile Include="Infrastructure\Modules\LoggingModule.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\FilterLists.cs" />
+    <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\LessonModel.cs" />
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomRoleProvider.cs" />
@@ -210,6 +199,8 @@
     <Compile Include="Models\UserLesson.cs" />
     <Compile Include="ViewModels\Role\EditViewModel.cs" />
     <Compile Include="ViewModels\Role\ListViewModel.cs" />
+    <Compile Include="ViewModels\Task\EditViewModel.cs" />
+    <Compile Include="ViewModels\Task\ListViewModel.cs" />
     <Compile Include="ViewModels\TeachPlan\EditViewModel.cs" />
     <Compile Include="ViewModels\TeachPlan\ListViewModel.cs" />
     <Compile Include="ViewModels\User\EditViewModel.cs" />
@@ -231,6 +222,9 @@
     <Content Include="Views\TeachPlan\Edit.cshtml" />
     <Content Include="Views\Journal\List.cshtml" />
     <Content Include="Views\Journal\Edit.cshtml" />
+    <Content Include="Views\TaskLoad\Index.cshtml" />
+    <Content Include="Views\TaskManage\List.cshtml" />
+    <Content Include="Views\Shared\TaskSummary.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -245,6 +239,10 @@
     <ProjectReference Include="..\LabaManagaSys.Domain\LabaManageSys.Domain.csproj">
       <Project>{d7af57d9-c948-4e3f-aad2-8768b453d252}</Project>
       <Name>LabaManageSys.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabaManageSys.XML\LabaManageSys.XML.csproj">
+      <Project>{e8734c72-e810-42d2-995f-a22897619d41}</Project>
+      <Name>LabaManageSys.XML</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

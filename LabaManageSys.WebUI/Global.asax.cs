@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using LabaManageSys.WebUI.App_Start;
+using LabaManageSys.WebUI.Infrastructure.Binders;
+using LabaManageSys.WebUI.Models;
 
 namespace LabaManageSys.WebUI
 {
@@ -14,6 +12,7 @@ namespace LabaManageSys.WebUI
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ModelBinders.Binders.Add(typeof(FilterModel), new FilterModelBinder());
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             log4net.Config.XmlConfigurator.Configure();

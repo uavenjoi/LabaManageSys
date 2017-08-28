@@ -33,7 +33,8 @@
                 {
                     @Html.ActionLink("Учебный план", "List", "TeachPlan", new { area = "" }, new { @class = "btn" })
                     @Html.ActionLink("Журнал посещаемости", "List", "Journal", new { area = "" }, new { @class = "btn" })
-
+                    @Html.ActionLink("Загрузка заданий", "Index", "TaskLoad", new { area = "" }, new { @class = "btn" })
+                    @Html.ActionLink("Скачать задания", "DownloadFile", "TaskLoad", new { area = "" }, new { @class = "btn" })
                 }
             </div>
             <div class="navbar-right">

@@ -1,0 +1,58 @@
+﻿@model LabaManageSys.WebUI.ViewModels.Task.ListViewModel
+@using LabaManageSys.WebUI.HtmlHelpers
+
+
+       @Html.DropDownListFor(_ => _.Filter.Author, new SelectList(Model.Lists.Authors.ToList(), "all"), "all")
+       @Html.DropDownListFor(_ => _.Filter.Topic, new SelectList(Model.Lists.Topics.ToList(), "all"), "all")
+       @Html.DropDownListFor(_ => _.Filter.Level, new SelectList(Model.Lists.Levels.ToList(), "all"), "all") 
+               
+ 
+        <div id="TasksList">
+            @foreach (var p in @Model.Tasks)
+            {
+                @Html.Partial("TaskSummary", p);
+            }
+        </div>
+
+        <div class="btn-group pull-right">
+            @Html.PageLinks(Model.PagingInfo, _ => Url.Action("List", new { page = _, filter = Model.Filter }))
+        </div>
+
+        @section scripts{
+            <script type="text/javascript">
+
+                function processProductData(data) {
+                    var target = $("#TasksList");
+                    target.empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var item = data[i];
+                        target.append(
+                            "<div class=\"well\"><h2>" + item.Topic+ "</h2><h3>уровень: " + item.Level + " автор: " + item.Author + "</h3><h3>" + item.Text + "</h3></div>"
+                            );
+                    }
+                }
+
+                function Ajax(optionName, selectedValue, callback) {
+                        $.ajax({
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            url: "@Url.Action("GetTasksDataJson")?"+optionName+"=" + selectedValue + "&page=1",
+                            success: function(result) {
+                            callback(result);
+                        },
+                        error: function (data) {
+                            alert("Извините произошла непредвиденная ошибка обратитись пожалуйста к администратору сайта.");
+                        }
+                    });
+                }
+
+                $(document).ready(function () {
+                    $('select').change(function () {
+                        var selectedValue = $(this).val();
+                        var optionName = $(this).attr('name').substring(7);
+                        var page = 1;
+                        Ajax(optionName = optionName, selectedValue = selectedValue, processProductData)
+                    })
+                })
+            </script>}

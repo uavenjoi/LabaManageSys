@@ -10,7 +10,7 @@ using LabaManageSys.WebUI.ViewModels.TeachPlan;
 
 namespace LabaManageSys.WebUI.Controllers
 {
-    // [Authorize(Roles = "Teachers")]
+    [Authorize(Roles = "Teachers")]
     public class TeachPlanController : Controller
     {
         private ILessonsRepository repository;

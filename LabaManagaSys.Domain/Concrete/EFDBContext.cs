@@ -19,6 +19,8 @@ namespace LabaManageSys.Domain.Concrete
 
         public virtual IDbSet<Course> Courses { get; set; }
 
+        public virtual IDbSet<Task> Tasks { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
              modelBuilder.Entity<Role>()
