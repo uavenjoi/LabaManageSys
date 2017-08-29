@@ -12,7 +12,7 @@ namespace LabaManageSys.WebUI.Controllers
     {
         private IUsersRepository repository;
         private ILogger log;
-        private int pageSize = 5;
+        private int pageSize = 5;//магические числа нужно заменять на константы
 
         public UserController(IUsersRepository repo, ILogger log)
         {
@@ -50,13 +50,13 @@ namespace LabaManageSys.WebUI.Controllers
             {
                 var message = "User " + user.Name + ((user.UserId == 0) ? " created" : " edited");
                 this.repository.UserUpdate(user);
-                this.TempData["message"] = string.Format("Изменения в пользователе \"{0}\" были сохранены", user.Name);
+                this.TempData["message"] = $"Изменения в пользователе {user.Name} были сохранены";
                 this.log.Info(message);
                 return this.RedirectToAction("List");
             }
             else
             {
-                // Что-то не так со значениями данных
+                // Что-то не так со значениями данных. (коммент лишний, из кода и так все понятно)
                 return this.View(new EditViewModel
                 {
                     User = user,
