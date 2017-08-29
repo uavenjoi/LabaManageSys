@@ -2,5 +2,6 @@
 {
     interface IxmlProccessor
     {
+        DontForgetToDeleteThisFile();//!
     }
 }
